@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema ILL — Red Reunir</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --rojo: #8B0000;
+    --rojo2: #b71c1c;
+    --gris: #f5f5f5;
+    --texto: #222;
+  }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--texto); background: #fff; }
+
+  /* NAV */
+  nav {
+    background: var(--rojo);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  nav .logo { color: white; font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+  nav .logo span { color: #ffcccc; font-weight: 300; }
+  nav ul { list-style: none; display: flex; gap: 24px; }
+  nav ul a { color: #ffcccc; text-decoration: none; font-size: 14px; transition: color .2s; }
+  nav ul a:hover { color: white; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--rojo) 0%, #3a0000 100%);
+    color: white;
+    padding: 100px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  .hero h1 { font-size: clamp(28px, 5vw, 52px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+  .hero h1 span { color: #ffaaaa; }
+  .hero p { font-size: 18px; color: #ffcccc; max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+  .btn-white { background: white; color: var(--rojo); }
+  .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,.5); }
+
+  /* STATS */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: var(--rojo2);
+    flex-wrap: wrap;
+  }
+  .stat {
+    padding: 28px 48px;
+    text-align: center;
+    color: white;
+    border-right: 1px solid rgba(255,255,255,.2);
+  }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-size: 36px; font-weight: 800; }
+  .stat .label { font-size: 13px; color: #ffcccc; margin-top: 4px; }
+
+  /* SECTION */
+  section { padding: 80px 40px; }
+  section.gray { background: var(--gris); }
+  .section-title { text-align: center; margin-bottom: 56px; }
+  .section-title h2 { font-size: 32px; font-weight: 700; color: var(--rojo); }
+  .section-title p { color: #666; margin-top: 10px; font-size: 16px; }
+
+  /* PROBLEMA vs SOLUCIÓN */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .compare-card {
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .compare-card.antes { background: #fff5f5; border: 2px solid #ffcccc; }
+  .compare-card.despues { background: #f0fff4; border: 2px solid #a8e6b8; }
+  .compare-card h3 { font-size: 18px; margin-bottom: 20px; }
+  .compare-card.antes h3 { color: #c0392b; }
+  .compare-card.despues h3 { color: #27ae60; }
+  .compare-card ul { list-style: none; }
+  .compare-card ul li { padding: 8px 0; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,.06); display: flex; gap: 10px; align-items: flex-start; }
+  .compare-card ul li:last-child { border-bottom: none; }
+
+  /* FLUJO */
+  .flujo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .flujo-step {
+    text-align: center;
+    width: 140px;
+    cursor: pointer;
+    transition: transform .2s;
+  }
+  .flujo-step:hover { transform: translateY(-4px); }
+  .flujo-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: white;
+    font-size: 28px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+    box-shadow: 0 4px 16px rgba(139,0,0,.3);
+    transition: background .2s;
+  }
+  .flujo-step:hover .flujo-icon { background: var(--rojo2); }
+  .flujo-step p { font-size: 12px; font-weight: 600; color: #444; line-height: 1.3; }
+  .flujo-arrow { font-size: 24px; color: #ccc; margin: 0 4px; margin-bottom: 32px; }
+
+  /* TOOLTIP del flujo */
+  .flujo-step { position: relative; }
+  .flujo-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: white;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: 160px;
+    line-height: 1.4;
+    z-index: 10;
+    text-align: left;
+  }
+  .flujo-step:hover .flujo-tooltip { display: block; }
+
+  /* STACK */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .stack-card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    transition: box-shadow .2s;
+  }
+  .stack-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.14); }
+  .stack-card .icon { font-size: 40px; margin-bottom: 12px; }
+  .stack-card h4 { font-size: 15px; font-weight: 700; color: var(--rojo); }
+  .stack-card p { font-size: 12px; color: #777; margin-top: 6px; line-height: 1.4; }
+  .stack-card .badge {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #27ae60;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-weight: 700;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    border-top: 4px solid var(--rojo);
+    transition: transform .2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); }
+  .feature-card .ico { font-size: 36px; margin-bottom: 16px; }
+  .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: var(--rojo); }
+  .feature-card p { font-size: 14px; color: #555; line-height: 1.6; }
+
+  /* ESTADOS BADGE */
+  .estados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .estado-badge {
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, var(--rojo), #3a0000);
+    color: white;
+    text-align: center;
+    padding: 80px 40px;
+  }
+  .cta h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+  .cta p { color: #ffcccc; margin-bottom: 32px; font-size: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    color: #777;
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+  }
+  footer span { color: #ffaaaa; }
+
+  @media (max-width: 640px) {
+    .compare { grid-template-columns: 1fr; }
+    .flujo { gap: 8px; }
+    .flujo-arrow { display: none; }
+    nav ul { display: none; }
+    .stat { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">REUNIR <span>/ Sistema ILL</span></div>
+  <ul>
+    <li><a href="#problema">Problema</a></li>
+    <li><a href="#flujo">Flujo</a></li>
+    <li><a href="#tecnologia">Tecnología</a></li>
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🏛️ Red de Bibliotecas — Colombia</div>
+  <h1>Sistema de Gestión de<br><span>Préstamo Interbibliotecario</span></h1>
+  <p>Automatización completa del proceso ILL para la red Reunir: solicitudes, notificaciones, trazabilidad y control — sin costos adicionales.</p>
+  <div class="hero-btns">
+    <a href="#flujo" class="btn btn-white">Ver cómo funciona</a>
+    <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-outline" target="_blank">Ver código en GitHub</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="num">100%</div><div class="label">Gratuito</div></div>
+  <div class="stat"><div class="num">7</div><div class="label">Estados de seguimiento</div></div>
+  <div class="stat"><div class="num">6</div><div class="label">Correos automáticos</div></div>
+  <div class="stat"><div class="num">0</div><div class="label">Servidores propios</div></div>
+</div>
+
+<!-- PROBLEMA vs SOLUCIÓN -->
+<section id="problema">
+  <div class="section-title">
+    <h2>El problema que resuelve</h2>
+    <p>El proceso actual presenta limitaciones críticas para la operación de la red</p>
+  </div>
+  <div class="compare">
+    <div class="compare-card antes">
+      <h3>❌ Antes — Estado actual</h3>
+      <ul>
+        <li><span>⚠️</span> Google Forms sin automatización</li>
+        <li><span>⚠️</span> Monitoreo manual de la hoja de cálculo</li>
+        <li><span>⚠️</span> Sin notificaciones automáticas</li>
+        <li><span>⚠️</span> Sin trazabilidad del estado</li>
+        <li><span>⚠️</span> Sin recordatorios de devolución</li>
+        <li><span>⚠️</span> Desarticulación entre bibliotecas</li>
+      </ul>
+    </div>
+    <div class="compare-card despues">
+      <h3>✅ Después — Sistema Reunir</h3>
+      <ul>
+        <li><span>✔️</span> Flujo automatizado de extremo a extremo</li>
+        <li><span>✔️</span> Notificaciones instantáneas por Gmail</li>
+        <li><span>✔️</span> Aprobación con un clic desde el correo</li>
+        <li><span>✔️</span> Historial cronológico por solicitud</li>
+        <li><span>✔️</span> Recordatorios automáticos de vencimiento</li>
+        <li><span>✔️</span> Evento en Calendar por cada préstamo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FLUJO -->
+<section id="flujo" class="gray">
+  <div class="section-title">
+    <h2>Flujo del proceso</h2>
+    <p>Cada etapa se gestiona automáticamente. Pasa el cursor sobre cada paso para más detalle.</p>
+  </div>
+  <div class="flujo">
+
+    <div class="flujo-step">
+      <div class="flujo-icon">📝</div>
+      <p>Usuario llena el formulario</p>
+      <div class="flujo-tooltip">El usuario completa el Google Form con los datos del material solicitado y su institución.</div>
+    </div>
+    <div class="flujo-arrow">→</div>
+
+    <div class="flujo-step">
+      <div class="flujo-icon">📨</div>
+      <p>Notificación a biblioteca prestadora</p>
+      <div class="flujo-tooltip">El sistema detecta la nueva solicitud y envía un correo automático a la biblioteca con botones Aprobar / Rechazar.</div>
+    </div>
+    <div class="flujo-arrow">→</div>
+
+    <div class="flujo-step">
+      <div class="flujo-icon">✅</div>
+      <p>Aprobación o rechazo</p>
+      <div class="flujo-tooltip">El bibliotecario responsable aprueba o rechaza con un clic desde su correo, sin necesidad de entrar al Sheet.</div>
+    </div>
+    <div class="flujo-arrow">→</div>
+
+    <div class="flujo-step">
+      <div class="flujo-icon">📖</div>
+      <p>Préstamo efectivo</p>
+      <div class="flujo-tooltip">El solicitante confirma la recepción del material. El sistema registra la fecha y calcula la fecha de devolución.</div>
+    </div>
+    <div class="flujo-arrow">→</div>
+
+    <div class="flujo-step">
+      <div class="flujo-icon">📅</div>
+      <p>Recordatorio automático</p>
+      <div class="flujo-tooltip">3 días antes del vencimiento, el sistema envía un recordatorio automático al solicitante.</div>
+    </div>
+    <div class="flujo-arrow">→</div>
+
+    <div class="flujo-step">
+      <div class="flujo-icon">📗</div>
+      <p>Devolución registrada</p>
+      <div class="flujo-tooltip">El solicitante confirma la devolución. El sistema cierra el ciclo y notifica a ambas partes.</div>
+    </div>
+
+  </div>
+
+  <br><br>
+  <div class="section-title" style="margin-bottom:24px">
+    <p>Estados de seguimiento de cada solicitud</p>
+  </div>
+  <div class="estados">
+    <div class="estado-badge" style="background:#e3f2fd;color:#1565c0">📬 Enviada</div>
+    <div class="estado-badge" style="background:#fff8e1;color:#f57f17">🔍 En validación</div>
+    <div class="estado-badge" style="background:#e8f5e9;color:#2e7d32">✅ Aprobada</div>
+    <div class="estado-badge" style="background:#fce4ec;color:#c62828">❌ Rechazada</div>
+    <div class="estado-badge" style="background:#f3e5f5;color:#6a1b9a">📖 En préstamo</div>
+    <div class="estado-badge" style="background:#e0f2f1;color:#00695c">📗 Devuelta</div>
+    <div class="estado-badge" style="background:#ffebee;color:#b71c1c">🚨 Vencida</div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍA -->
+<section id="tecnologia">
+  <div class="section-title">
+    <h2>Stack tecnológico</h2>
+    <p>100% Google Suite — sin costos adicionales, sin servidores propios</p>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="icon">📋</div>
+      <h4>Google Forms</h4>
+      <p>Formulario de solicitud accesible desde cualquier dispositivo</p>
+      <span class="badge">GRATUITO</span>
+    </div>
+    <div class="stack-card">
+      <div class="icon">📊</div>
+      <h4>Google Sheets</h4>
+      <p>Base de datos central con historial y trazabilidad de solicitudes</p>
+      <span class="badge">GRATUITO</span>
+    </div>
+    <div class="stack-card">
+      <div class="icon">⚙️</div>
+      <h4>Apps Script</h4>
+      <p>Motor de automatización: triggers, flujos y lógica del sistema</p>
+      <span class="badge">GRATUITO</span>
+    </div>
+    <div class="stack-card">
+      <div class="icon">📧</div>
+      <h4>Gmail</h4>
+      <p>Notificaciones automáticas con plantillas HTML en cada etapa</p>
+      <span class="badge">GRATUITO</span>
+    </div>
+    <div class="stack-card">
+      <div class="icon">📅</div>
+      <h4>Google Calendar</h4>
+      <p>Eventos automáticos de vencimiento por cada préstamo activo</p>
+      <span class="badge">GRATUITO</span>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section id="funcionalidades" class="gray">
+  <div class="section-title">
+    <h2>Funcionalidades del sistema</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="ico">🤖</div>
+      <h3>Automatización total</h3>
+      <p>Desde que el usuario envía el formulario hasta la devolución, el sistema gestiona cada etapa sin intervención manual.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">📧</div>
+      <h3>Notificaciones inteligentes</h3>
+      <p>Correos HTML personalizados para cada actor del proceso: solicitante, biblioteca prestadora y administrador de la red.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🖱️</div>
+      <h3>Aprobación con un clic</h3>
+      <p>El bibliotecario aprueba o rechaza directamente desde su correo, sin necesidad de acceder a ningún sistema adicional.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">📜</div>
+      <h3>Trazabilidad completa</h3>
+      <p>Registro cronológico de cada acción: quién actuó, qué cambió y cuándo — visible en la hoja de control.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">⏰</div>
+      <h3>Control de vencimientos</h3>
+      <p>Recordatorios automáticos 3 días antes del vencimiento y marcado automático de préstamos vencidos cada mañana.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🏛️</div>
+      <h3>Multi-institución</h3>
+      <p>Diseñado para redes de bibliotecas con diferentes dominios de correo y responsables por institución.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>¿Listo para implementarlo?</h2>
+  <p>El sistema está documentado y listo para configurarse en menos de 30 minutos.</p>
+  <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-white" target="_blank">Ver repositorio en GitHub</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Desarrollado para la <span>Red Reunir</span> — Sistema de Préstamo Interbibliotecario |
+  Construido con Google Suite &amp; Apps Script
+</footer>
+
+</body>
+</html>
