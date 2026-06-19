@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema ILL + Digitk — Red Reunir & Areandina</title>
+<title>Sistema ILL v2.0 — Red Reunir</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -13,9 +13,6 @@
     --negro: #1a1a1a;
     --gris: #f5f5f5;
     --texto: #333;
-    --azul: #1565c0;
-    --azul2: #1976d2;
-    --azul3: #e3f2fd;
   }
   body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--texto); background: #fff; }
 
@@ -30,133 +27,96 @@
     box-shadow: 0 2px 8px rgba(0,0,0,.1);
     border-bottom: 3px solid var(--verde);
   }
-  .nav-logo { display: flex; align-items: center; gap: 12px; }
   .nav-logo .marca { font-size: 22px; font-weight: 800; color: var(--verde); letter-spacing: 2px; }
   .nav-logo .sub { font-size: 12px; color: #777; line-height: 1.2; }
-  nav ul { list-style: none; display: flex; gap: 24px; align-items: center; }
+  nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
   nav ul a { color: var(--texto); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
   nav ul a:hover { color: var(--verde); }
-  .nav-badge {
-    background: var(--azul); color: white;
-    font-size: 10px; font-weight: 700;
-    padding: 3px 10px; border-radius: 12px;
-    letter-spacing: 1px; text-transform: uppercase;
+  .v2-pill {
+    background: var(--verde); color: white;
+    font-size: 11px; font-weight: 800;
+    padding: 4px 12px; border-radius: 12px; letter-spacing: 1px;
   }
 
   /* HERO */
   .hero {
-    background: linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.7)),
+    background: linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.72)),
       url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1400&q=80') center/cover no-repeat;
-    color: white;
-    padding: 100px 40px 80px;
-    text-align: center;
+    color: white; padding: 110px 40px 90px; text-align: center;
   }
   .hero-badge {
-    display: inline-block;
-    background: var(--verde);
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-    font-weight: 600;
+    display: inline-block; background: var(--verde);
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 12px; margin-bottom: 8px;
+    letter-spacing: 1px; font-weight: 600;
   }
-  .hero-badge-new {
+  .hero-badge-v2 {
     display: inline-block;
-    background: var(--azul2);
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-bottom: 24px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-left: 8px;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.35);
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 12px; margin-bottom: 24px; margin-left: 8px;
+    letter-spacing: 1px; font-weight: 700; color: #69f0ae;
   }
-  .hero h1 { font-size: clamp(26px, 4.5vw, 48px); font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
-  .hero h1 .green { color: #69f0ae; }
-  .hero h1 .blue { color: #90caf9; }
-  .hero p { font-size: 16px; color: #ddd; max-width: 680px; margin: 0 auto 40px; line-height: 1.7; }
-  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .hero h1 { font-size: clamp(28px, 5vw, 50px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+  .hero h1 span { color: #69f0ae; }
+  .hero p { font-size: 16px; color: #ddd; max-width: 640px; margin: 0 auto 18px; line-height: 1.7; }
+  .hero-cambio-clave {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(105,240,174,.12); border: 1px solid rgba(105,240,174,.3);
+    padding: 10px 22px; border-radius: 8px; margin-bottom: 36px;
+    font-size: 13px; color: #b9f6ca; font-weight: 500;
+  }
+  .hero-cambio-clave strong { color: #69f0ae; }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   .btn {
     padding: 13px 26px; border-radius: 6px; font-size: 15px; font-weight: 700;
     text-decoration: none; transition: transform .2s, box-shadow .2s;
     cursor: pointer; border: none; display: inline-block;
   }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
-  .btn-green  { background: var(--verde); color: white; }
-  .btn-blue   { background: var(--azul2); color: white; }
-  .btn-outline{ background: transparent; color: white; border: 2px solid rgba(255,255,255,.6); }
+  .btn-green   { background: var(--verde); color: white; }
+  .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,.55); }
   .btn-outline:hover { background: rgba(255,255,255,.1); }
 
-  /* UPDATE BANNER */
-  .update-banner {
-    background: linear-gradient(90deg, #1565c0, #1976d2);
-    color: white;
-    padding: 14px 40px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .update-banner strong { font-weight: 800; }
-  .update-banner .pill {
-    background: rgba(255,255,255,.2);
-    padding: 3px 12px; border-radius: 12px;
-    font-size: 11px; font-weight: 700; letter-spacing: 1px;
-    margin-right: 8px;
-  }
-
   /* STATS */
-  .stats {
-    display: flex; justify-content: center;
-    background: var(--verde); flex-wrap: wrap;
-  }
-  .stat {
-    padding: 26px 44px; text-align: center; color: white;
-    border-right: 1px solid rgba(255,255,255,.2);
-  }
+  .stats { display: flex; justify-content: center; background: var(--verde); flex-wrap: wrap; }
+  .stat { padding: 26px 44px; text-align: center; color: white; border-right: 1px solid rgba(255,255,255,.2); }
   .stat:last-child { border-right: none; }
-  .stat .num { font-size: 34px; font-weight: 800; }
+  .stat .num   { font-size: 34px; font-weight: 800; }
   .stat .label { font-size: 11px; color: #c8e6c9; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
 
   /* SECTIONS */
   section { padding: 76px 40px; }
   section.gray { background: var(--gris); }
-  section.dark-section { background: #1a2e1a; }
   .section-title { text-align: center; margin-bottom: 52px; }
   .section-title h2 { font-size: 28px; font-weight: 800; color: var(--negro); }
-  .section-title h2 .green { color: var(--verde); }
-  .section-title h2 .blue  { color: var(--azul); }
+  .section-title h2 span { color: var(--verde); }
   .section-title p { color: #777; margin-top: 10px; font-size: 14px; }
-  .section-title .linea {
-    width: 50px; height: 4px; border-radius: 2px;
-    margin: 14px auto 0;
-  }
-  .linea-green { background: var(--verde); }
-  .linea-blue  { background: var(--azul2); }
+  .section-title .linea { width: 50px; height: 4px; background: var(--verde); margin: 14px auto 0; border-radius: 2px; }
 
-  /* MÓDULOS TABS */
-  .tabs {
-    display: flex; justify-content: center; gap: 0;
-    margin-bottom: 52px; border-radius: 10px; overflow: hidden;
-    border: 2px solid #e0e0e0; width: fit-content; margin-left: auto; margin-right: auto;
+  /* CAMBIO CLAVE HIGHLIGHT */
+  .cambio-clave-box {
+    max-width: 820px; margin: 0 auto 56px;
+    background: #1b5e20; color: white;
+    border-radius: 14px; padding: 36px 40px;
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 28px; align-items: center;
   }
-  .tab {
-    padding: 14px 36px; font-size: 14px; font-weight: 700;
-    cursor: pointer; transition: all .2s; background: white; color: #777;
-    border: none; outline: none;
+  .cambio-clave-box .icon { font-size: 56px; }
+  .cambio-clave-box h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; color: #69f0ae; }
+  .cambio-clave-box p  { font-size: 14px; line-height: 1.7; color: #c8e6c9; }
+  .cambio-clave-box code {
+    background: rgba(255,255,255,.12); padding: 2px 8px;
+    border-radius: 4px; font-family: monospace; font-size: 13px; color: #b9f6ca;
   }
-  .tab.active-green { background: var(--verde); color: white; }
-  .tab.active-blue  { background: var(--azul2); color: white; }
 
   /* COMPARE */
-  .compare {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 28px; max-width: 860px; margin: 0 auto;
-  }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 820px; margin: 0 auto; }
   .compare-card { border-radius: 12px; padding: 28px; }
   .compare-card.antes   { background: #fff5f5; border: 2px solid #ffcdd2; }
   .compare-card.despues { background: var(--verde3); border: 2px solid #a5d6a7; }
-  .compare-card h3 { font-size: 16px; margin-bottom: 18px; font-weight: 700; }
+  .compare-card h3 { font-size: 15px; margin-bottom: 16px; font-weight: 700; }
   .compare-card.antes h3   { color: #c62828; }
   .compare-card.despues h3 { color: var(--verde); }
   .compare-card ul { list-style: none; }
@@ -167,185 +127,159 @@
   }
   .compare-card ul li:last-child { border-bottom: none; }
 
-  /* FLUJO ILL */
-  .flujo {
+  /* FLUJO 7 PASOS */
+  .flujo-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px; max-width: 1060px; margin: 0 auto;
+  }
+  .flujo-card {
+    background: white; border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    border-top: 4px solid var(--verde);
+    position: relative; transition: transform .2s;
+  }
+  .flujo-card:hover { transform: translateY(-4px); }
+  .flujo-num {
+    position: absolute; top: -18px; left: 20px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--verde); color: white;
+    font-size: 15px; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
-    flex-wrap: wrap; max-width: 1100px; margin: 0 auto;
+    box-shadow: 0 3px 12px rgba(46,125,50,.35);
   }
-  .flujo-step {
-    text-align: center; width: 130px; cursor: pointer;
-    transition: transform .2s; position: relative;
+  .flujo-card .ico { font-size: 28px; margin: 8px 0 10px; }
+  .flujo-card h4 { font-size: 14px; font-weight: 700; color: var(--negro); margin-bottom: 7px; }
+  .flujo-card p  { font-size: 12px; color: #666; line-height: 1.55; }
+  .flujo-card .tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 9px; border-radius: 10px; margin-top: 10px;
+    background: var(--verde3); color: var(--verde);
   }
-  .flujo-step:hover { transform: translateY(-6px); }
-  .flujo-icon {
-    width: 68px; height: 68px; border-radius: 50%;
-    color: white; font-size: 26px;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 12px; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  .flujo-card .tag-new {
+    background: #fff8e1; color: #f57f17;
   }
-  .flujo-icon.green { background: var(--verde); box-shadow: 0 4px 16px rgba(46,125,50,.3); }
-  .flujo-icon.blue  { background: var(--azul2); box-shadow: 0 4px 16px rgba(21,101,192,.3); }
-  .flujo-step:hover .flujo-icon.green { background: var(--verde2); }
-  .flujo-step:hover .flujo-icon.blue  { background: #1e88e5; }
-  .flujo-step p { font-size: 11px; font-weight: 600; color: #444; line-height: 1.3; }
-  .flujo-arrow { font-size: 20px; color: #bbb; margin: 0 2px 30px; }
-  .flujo-tooltip {
-    display: none; position: absolute; bottom: 110%; left: 50%;
-    transform: translateX(-50%); background: #222; color: white;
-    font-size: 11px; padding: 8px 12px; border-radius: 6px;
-    width: 155px; line-height: 1.4; z-index: 10; text-align: left;
-  }
-  .flujo-step:hover .flujo-tooltip { display: block; }
-
-  /* DIGITK STEPPER */
-  .stepper {
-    display: flex; justify-content: center;
-    gap: 0; max-width: 760px; margin: 0 auto 40px;
-    position: relative;
-  }
-  .stepper::before {
-    content: ''; position: absolute; top: 28px; left: 12%;
-    right: 12%; height: 3px; background: #e0e0e0; z-index: 0;
-  }
-  .stepper-step { text-align: center; flex: 1; position: relative; z-index: 1; }
-  .stepper-circle {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: white; border: 3px solid #e0e0e0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; margin: 0 auto 10px;
-    transition: all .3s;
-  }
-  .stepper-step.done .stepper-circle { background: var(--azul2); border-color: var(--azul2); }
-  .stepper-step p { font-size: 11px; font-weight: 600; color: #666; line-height: 1.3; max-width: 90px; margin: 0 auto; }
-  .stepper-step.done p { color: var(--azul2); }
 
   /* ESTADOS */
-  .estados {
-    display: flex; flex-wrap: wrap;
-    gap: 10px; justify-content: center;
-    max-width: 760px; margin: 28px auto 0;
-  }
+  .estados { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 800px; margin: 0 auto; }
   .estado-badge {
-    padding: 9px 18px; border-radius: 24px;
+    padding: 10px 18px; border-radius: 24px;
     font-size: 12px; font-weight: 700;
     display: flex; align-items: center; gap: 7px;
   }
 
+  /* CORREOS BIBLIOTECAS */
+  .correos-section {
+    background: #1a2e1a; padding: 72px 40px;
+  }
+  .correos-section .section-title h2 { color: white; }
+  .correos-section .section-title p  { color: #81c784; }
+  .correos-section .section-title .linea { background: #69f0ae; }
+  .correos-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 28px; max-width: 920px; margin: 0 auto;
+  }
+  .correos-card {
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px; padding: 28px;
+  }
+  .correos-card h4 { font-size: 14px; font-weight: 700; color: #69f0ae; margin-bottom: 14px; }
+  .correos-card p  { font-size: 13px; color: #c8e6c9; line-height: 1.65; }
+  .correos-card code {
+    display: block; background: rgba(0,0,0,.35);
+    border-left: 3px solid #69f0ae;
+    padding: 12px 16px; border-radius: 6px;
+    font-family: 'Courier New', monospace; font-size: 12px;
+    color: #b9f6ca; margin-top: 14px; line-height: 1.7;
+  }
+  .correos-card .warn {
+    background: rgba(255,152,0,.12); border: 1px solid rgba(255,152,0,.3);
+    border-radius: 8px; padding: 12px 14px; margin-top: 14px;
+    font-size: 12px; color: #ffcc80; line-height: 1.5;
+  }
+
+  /* ACCIONES LINK */
+  .actions-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px; max-width: 1000px; margin: 0 auto;
+  }
+  .action-card {
+    background: white; border-radius: 10px; padding: 22px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07); border-left: 4px solid var(--verde);
+  }
+  .action-card .method {
+    font-family: 'Courier New', monospace; font-size: 11px;
+    background: var(--verde3); color: var(--verde);
+    padding: 3px 9px; border-radius: 5px; font-weight: 700; margin-bottom: 10px;
+    display: inline-block;
+  }
+  .action-card h4 { font-size: 14px; font-weight: 700; color: var(--negro); margin-bottom: 6px; }
+  .action-card p  { font-size: 12px; color: #666; line-height: 1.5; }
+
   /* STACK */
   .stack-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 20px; max-width: 920px; margin: 0 auto;
+    gap: 20px; max-width: 860px; margin: 0 auto;
   }
   .stack-card {
     background: white; border-radius: 12px; padding: 24px 18px; text-align: center;
     box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    border-top: 4px solid var(--verde);
     transition: box-shadow .2s, transform .2s;
   }
   .stack-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,.12); transform: translateY(-4px); }
-  .stack-card.green-top { border-top: 4px solid var(--verde); }
-  .stack-card.blue-top  { border-top: 4px solid var(--azul2); }
-  .stack-card.both-top  { border-top: 4px solid; border-image: linear-gradient(90deg,var(--verde),var(--azul2)) 1; }
   .stack-card .icon { font-size: 36px; margin-bottom: 10px; }
   .stack-card h4 { font-size: 14px; font-weight: 700; color: var(--negro); }
   .stack-card p  { font-size: 11px; color: #777; margin-top: 5px; line-height: 1.4; }
-  .stack-card .badge {
-    display: inline-block; font-size: 9px;
-    padding: 2px 9px; border-radius: 10px;
-    margin-top: 8px; font-weight: 700;
-  }
-  .badge-green { background: var(--verde3); color: var(--verde); }
-  .badge-blue  { background: var(--azul3); color: var(--azul); }
-
-  /* FEATURES */
-  .features-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-    gap: 24px; max-width: 1080px; margin: 0 auto;
-  }
-  .feature-card {
-    background: white; border-radius: 12px; padding: 28px 22px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.07); transition: transform .2s;
-  }
-  .feature-card:hover { transform: translateY(-4px); }
-  .feature-card.green-left { border-left: 5px solid var(--verde); }
-  .feature-card.blue-left  { border-left: 5px solid var(--azul2); }
-  .feature-card .ico { font-size: 32px; margin-bottom: 12px; }
-  .feature-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--negro); }
-  .feature-card p  { font-size: 13px; color: #666; line-height: 1.6; }
-  .feature-tag {
-    display: inline-block; font-size: 10px; font-weight: 700;
-    padding: 2px 9px; border-radius: 10px; margin-bottom: 10px;
-  }
-  .tag-green { background: var(--verde3); color: var(--verde); }
-  .tag-blue  { background: var(--azul3); color: var(--azul); }
-
-  /* MÓDULO DIGITK INFO */
-  .digitk-info {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 40px; max-width: 960px; margin: 0 auto;
-    align-items: center;
-  }
-  .digitk-info .text h3 {
-    font-size: 22px; font-weight: 800; color: var(--negro);
-    margin-bottom: 14px; line-height: 1.3;
-  }
-  .digitk-info .text h3 span { color: var(--azul2); }
-  .digitk-info .text p { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 14px; }
-  .digitk-info ul { list-style: none; }
-  .digitk-info ul li {
-    padding: 7px 0; font-size: 13px; color: #444;
-    border-bottom: 1px solid #eee; display: flex; gap: 9px; align-items: flex-start;
-  }
-  .digitk-info ul li:last-child { border-bottom: none; }
-  .digitk-preview {
-    background: linear-gradient(135deg, #1a2e0e, #1565c0 120%);
-    border-radius: 16px; padding: 28px; color: white;
-    box-shadow: 0 12px 40px rgba(21,101,192,.2);
-  }
-  .digitk-preview .step-pill {
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(255,255,255,.1); border-radius: 10px;
-    padding: 12px 16px; margin-bottom: 10px; font-size: 13px; font-weight: 600;
-  }
-  .digitk-preview .step-pill:last-child { margin-bottom: 0; }
-  .digitk-preview .step-num {
-    width: 30px; height: 30px; border-radius: 50%;
-    background: rgba(255,255,255,.2); display: flex;
-    align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 800; flex-shrink: 0;
+  .badge-green {
+    display: inline-block; background: var(--verde3); color: var(--verde);
+    font-size: 9px; padding: 2px 9px; border-radius: 10px; margin-top: 8px; font-weight: 700;
   }
 
-  /* CTA DUAL */
-  .cta-dual {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 0; max-width: 100%;
+  /* SHEET INFO */
+  .sheet-info {
+    max-width: 820px; margin: 0 auto;
+    background: white; border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.09);
+    overflow: hidden;
   }
-  .cta-panel {
-    padding: 72px 48px; text-align: center;
+  .sheet-header {
+    background: var(--verde); color: white;
+    padding: 18px 28px; font-size: 14px; font-weight: 700;
   }
-  .cta-panel.green { background: linear-gradient(135deg, var(--verde), #1b5e20); color: white; }
-  .cta-panel.blue  { background: linear-gradient(135deg, var(--azul2), #0d47a1); color: white; }
-  .cta-panel h2 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
-  .cta-panel p  { margin-bottom: 28px; font-size: 14px; opacity: .85; }
-  .btn-white { background: white; font-weight: 700; }
-  .btn-white.green { color: var(--verde); }
-  .btn-white.blue  { color: var(--azul2); }
+  .sheet-body { padding: 24px 28px; }
+  .sheet-cols {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .col-chip {
+    background: var(--verde3); color: var(--verde);
+    font-size: 11px; font-weight: 700;
+    padding: 5px 12px; border-radius: 6px;
+  }
+  .col-chip.special { background: #fff8e1; color: #e65100; }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, var(--verde), #1b5e20);
+    color: white; text-align: center; padding: 80px 40px;
+  }
+  .cta h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+  .cta p  { color: #c8e6c9; margin-bottom: 30px; font-size: 15px; }
+  .btn-white { background: white; color: var(--verde); font-weight: 700; }
 
   /* FOOTER */
   footer {
     background: var(--negro); color: #777;
     text-align: center; padding: 22px; font-size: 12px;
   }
-  footer .g { color: #69f0ae; }
-  footer .b { color: #90caf9; }
+  footer span { color: #69f0ae; }
 
-  @media (max-width: 700px) {
+  @media (max-width: 680px) {
     .compare { grid-template-columns: 1fr; }
-    .flujo-arrow { display: none; }
+    .correos-grid { grid-template-columns: 1fr; }
     nav ul { display: none; }
     .stat { padding: 18px 22px; }
-    .digitk-info { grid-template-columns: 1fr; }
-    .cta-dual { grid-template-columns: 1fr; }
-    .stepper::before { display: none; }
+    .cambio-clave-box { grid-template-columns: 1fr; text-align: center; }
   }
 </style>
 </head>
@@ -354,132 +288,147 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <div>
-      <div class="marca">REUNIR</div>
-      <div class="sub">Red de Unidades de Información<br>Risaralda y Eje Cafetero</div>
-    </div>
+    <div class="marca">REUNIR</div>
+    <div class="sub">Red de Unidades de Información<br>Risaralda y Eje Cafetero</div>
   </div>
   <ul>
-    <li><a href="#ill">Módulo ILL</a></li>
-    <li><a href="#digitk">Módulo Digitk</a></li>
-    <li><a href="#tecnologia">Tecnología</a></li>
-    <li><a href="#funcionalidades">Funcionalidades</a></li>
-    <li><span class="nav-badge">v2.0</span></li>
+    <li><a href="#cambio">Cambio clave</a></li>
+    <li><a href="#flujo">Flujo</a></li>
+    <li><a href="#acciones">Acciones</a></li>
+    <li><a href="#tecnologia">Stack</a></li>
+    <li><span class="v2-pill">v2.0</span></li>
   </ul>
 </nav>
-
-<!-- UPDATE BANNER -->
-<div class="update-banner">
-  <span class="pill">NUEVO</span>
-  <strong>v2.0 actualizada</strong> — Se integró el módulo <strong>Cargue Digitk</strong> para el repositorio institucional de Areandina
-</div>
 
 <!-- HERO -->
 <div class="hero">
   <div>
     <div class="hero-badge">🏛️ Red Reunir — Risaralda y Eje Cafetero</div>
-    <div class="hero-badge-new">📚 Areandina — Repositorio Digitk</div>
+    <div class="hero-badge-v2">✦ v2.0</div>
   </div>
-  <h1>Plataforma de Gestión<br><span class="green">Interbibliotecaria</span> y <span class="blue">Repositorio Digital</span></h1>
-  <p>Dos módulos integrados: préstamo interbibliotecario para la red Reunir y cargue automatizado al repositorio Digitk de Areandina — construidos sobre Google Suite, sin costos adicionales.</p>
+  <h1>Sistema de Gestión de<br><span>Préstamo Interbibliotecario</span></h1>
+  <p>Automatización completa del proceso ILL: solicitudes, notificaciones, trazabilidad y control — construido sobre Google Suite, sin costos adicionales.</p>
+  <div class="hero-cambio-clave">
+    🔑 <span>Cambio clave v2: el solicitante <strong>ya no escribe el correo</strong> de la biblioteca — el sistema lo resuelve solo</span>
+  </div>
   <div class="hero-btns">
-    <a href="#ill"    class="btn btn-green">Módulo ILL →</a>
-    <a href="#digitk" class="btn btn-blue">Módulo Digitk →</a>
-    <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-outline" onclick="window.open(this.href,'_blank');return false;">GitHub</a>
+    <a href="#flujo" class="btn btn-green" onclick="document.getElementById('flujo').scrollIntoView({behavior:'smooth'});return false;">Ver flujo completo</a>
+    <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-outline" onclick="window.open(this.href,'_blank');return false;">Ver código en GitHub</a>
   </div>
 </div>
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat"><div class="num">2</div><div class="label">Módulos activos</div></div>
   <div class="stat"><div class="num">100%</div><div class="label">Gratuito</div></div>
-  <div class="stat"><div class="num">7</div><div class="label">Estados ILL</div></div>
-  <div class="stat"><div class="num">4</div><div class="label">Pasos Digitk</div></div>
+  <div class="stat"><div class="num">7</div><div class="label">Pasos del flujo</div></div>
+  <div class="stat"><div class="num">8</div><div class="label">Estados</div></div>
+  <div class="stat"><div class="num">25</div><div class="label">Instituciones</div></div>
+  <div class="stat"><div class="num">19</div><div class="label">Columnas Sheet</div></div>
   <div class="stat"><div class="num">0</div><div class="label">Servidores propios</div></div>
 </div>
 
-<!-- ═══════════════════ MÓDULO ILL ═══════════════════ -->
-<section id="ill">
+<!-- CAMBIO CLAVE -->
+<section id="cambio">
   <div class="section-title">
-    <h2>Módulo 1 — Préstamo <span class="green">Interbibliotecario</span></h2>
-    <p>Automatización del proceso ILL para la red Reunir</p>
-    <div class="linea linea-green"></div>
+    <h2>El cambio <span>clave de v2.0</span></h2>
+    <p>Una sola mejora elimina el mayor punto de error del proceso</p>
+    <div class="linea"></div>
   </div>
 
-  <!-- Problema/Solución -->
+  <div class="cambio-clave-box">
+    <div class="icon">🔑</div>
+    <div>
+      <h3>CORREOS_BIBLIOTECAS — el corazón del cambio</h3>
+      <p>En v1, el solicitante debía escribir manualmente el correo de la biblioteca prestadora — fuente de errores, correos incorrectos y solicitudes perdidas. En v2, ese campo desapareció del formulario. La función <code>getCorreoBiblioteca()</code> consulta una tabla interna con los 25 correos de la red y los resuelve automáticamente por nombre exacto de institución. Un solo punto de verdad para toda la red.</p>
+    </div>
+  </div>
+
   <div class="compare">
     <div class="compare-card antes">
-      <h3>❌ Antes</h3>
+      <h3>❌ v1 — El solicitante escribía el correo</h3>
       <ul>
-        <li><span>⚠️</span> Google Forms sin automatización</li>
-        <li><span>⚠️</span> Monitoreo manual en Excel</li>
-        <li><span>⚠️</span> Sin notificaciones automáticas</li>
-        <li><span>⚠️</span> Sin trazabilidad del estado</li>
-        <li><span>⚠️</span> Sin recordatorios de devolución</li>
-        <li><span>⚠️</span> Desarticulación entre bibliotecas</li>
+        <li><span>⚠️</span> Campo de texto libre para el correo de la biblioteca</li>
+        <li><span>⚠️</span> Errores tipográficos frecuentes</li>
+        <li><span>⚠️</span> Solicitudes perdidas por correo incorrecto</li>
+        <li><span>⚠️</span> Sin validación del destinatario</li>
+        <li><span>⚠️</span> Cada cambio de correo requería actualizar el form</li>
       </ul>
     </div>
     <div class="compare-card despues">
-      <h3>✅ Después</h3>
+      <h3>✅ v2 — El sistema resuelve el correo solo</h3>
       <ul>
-        <li><span>✔️</span> Flujo automatizado de extremo a extremo</li>
-        <li><span>✔️</span> Notificaciones instantáneas por Gmail</li>
-        <li><span>✔️</span> Aprobación con un clic desde el correo</li>
-        <li><span>✔️</span> Historial cronológico por solicitud</li>
-        <li><span>✔️</span> Recordatorios automáticos de vencimiento</li>
-        <li><span>✔️</span> Evento en Calendar por cada préstamo</li>
+        <li><span>✔️</span> El solicitante elige la institución de una lista</li>
+        <li><span>✔️</span> <code style="background:#c8e6c9;padding:1px 5px;border-radius:3px;font-size:12px">getCorreoBiblioteca()</code> resuelve el correo internamente</li>
+        <li><span>✔️</span> Cero posibilidad de correo incorrecto</li>
+        <li><span>✔️</span> Si no hay correo → estado Pendiente + alerta admin</li>
+        <li><span>✔️</span> Actualizar correos no requiere tocar el formulario</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- FLUJO ILL -->
-<section class="gray" style="padding-top:0;padding-bottom:72px">
-  <div class="section-title" style="padding-top:60px">
-    <h2>Flujo del <span class="green">proceso ILL</span></h2>
-    <p>Cada etapa se gestiona automáticamente. Pasa el cursor sobre cada paso.</p>
-    <div class="linea linea-green"></div>
+<!-- FLUJO 7 PASOS -->
+<section id="flujo" class="gray">
+  <div class="section-title">
+    <h2>Flujo completo — <span>7 pasos</span></h2>
+    <p>Cada etapa se gestiona automáticamente desde el formulario hasta la devolución</p>
+    <div class="linea"></div>
   </div>
-  <div class="flujo">
-    <div class="flujo-step">
-      <div class="flujo-icon green">📝</div>
-      <p>Usuario llena el formulario</p>
-      <div class="flujo-tooltip">El usuario completa el Google Form con los datos del material solicitado y su institución.</div>
+  <div class="flujo-grid">
+    <div class="flujo-card">
+      <div class="flujo-num">1</div>
+      <div class="ico">📝</div>
+      <h4>Usuario llena el formulario</h4>
+      <p>Nombre, correo, institución, <strong>biblioteca prestadora</strong> (lista de 25), tipo de material, título y autor.</p>
+      <span class="tag">FormApp</span>
     </div>
-    <div class="flujo-arrow">→</div>
-    <div class="flujo-step">
-      <div class="flujo-icon green">📨</div>
-      <p>Notificación a biblioteca prestadora</p>
-      <div class="flujo-tooltip">El sistema envía correo automático a la biblioteca con botones Aprobar / Rechazar.</div>
+    <div class="flujo-card">
+      <div class="flujo-num">2</div>
+      <div class="ico">🔍</div>
+      <h4>Trigger resuelve correo</h4>
+      <p><code style="font-size:11px;background:#e8f5e9;padding:1px 6px;border-radius:3px">procesarFormularioReunir()</code> consulta <code style="font-size:11px;background:#e8f5e9;padding:1px 6px;border-radius:3px">CORREOS_BIBLIOTECAS{}</code> — el solicitante nunca escribe el correo.</p>
+      <span class="tag tag-new">★ Nuevo en v2</span>
     </div>
-    <div class="flujo-arrow">→</div>
-    <div class="flujo-step">
-      <div class="flujo-icon green">✅</div>
-      <p>Aprobación o rechazo</p>
-      <div class="flujo-tooltip">El bibliotecario aprueba o rechaza con un clic desde su correo, sin acceder a ningún sistema adicional.</div>
+    <div class="flujo-card">
+      <div class="flujo-num">3</div>
+      <div class="ico">📨</div>
+      <h4>2 correos simultáneos</h4>
+      <p>Biblioteca recibe solicitud con botones <strong>Aprobar / Rechazar</strong>. Solicitante recibe confirmación con su <strong>ID único</strong>.</p>
+      <span class="tag">MailApp</span>
     </div>
-    <div class="flujo-arrow">→</div>
-    <div class="flujo-step">
-      <div class="flujo-icon green">📖</div>
-      <p>Préstamo efectivo</p>
-      <div class="flujo-tooltip">El solicitante confirma la recepción. Se registra la fecha y calcula la devolución.</div>
+    <div class="flujo-card">
+      <div class="flujo-num">4</div>
+      <div class="ico">🖱️</div>
+      <h4>Biblioteca responde con 1 clic</h4>
+      <p>Sin login, sin contraseña. Un clic en el correo ejecuta la acción. Rechazo requiere 2 pasos: motivo + confirmación.</p>
+      <span class="tag">doGet(e)</span>
     </div>
-    <div class="flujo-arrow">→</div>
-    <div class="flujo-step">
-      <div class="flujo-icon green">📅</div>
-      <p>Recordatorio automático</p>
-      <div class="flujo-tooltip">3 días antes del vencimiento se envía recordatorio automático al solicitante.</div>
+    <div class="flujo-card">
+      <div class="flujo-num">5</div>
+      <div class="ico">📖</div>
+      <h4>Solicitante confirma recepción</h4>
+      <p>Marca el préstamo como recibido. El sistema calcula devolución <strong>+15 días</strong> y crea un <strong>evento en Calendar</strong>.</p>
+      <span class="tag">CalendarApp</span>
     </div>
-    <div class="flujo-arrow">→</div>
-    <div class="flujo-step">
-      <div class="flujo-icon green">📗</div>
-      <p>Devolución registrada</p>
-      <div class="flujo-tooltip">El solicitante confirma la devolución y el sistema cierra el ciclo.</div>
+    <div class="flujo-card">
+      <div class="flujo-num">6</div>
+      <div class="ico">⏰</div>
+      <h4>Seguimiento automático</h4>
+      <p>Trigger diario: recordatorio <strong>3 días antes</strong> del vencimiento. Si la fecha pasa → estado cambia a <strong>Vencida</strong>.</p>
+      <span class="tag">Trigger diario 8am</span>
+    </div>
+    <div class="flujo-card">
+      <div class="flujo-num">7</div>
+      <div class="ico">📊</div>
+      <h4>Todo queda en el Sheet</h4>
+      <p><strong>19 columnas</strong> con historial completo. La columna S (<code style="font-size:11px">appendLog()</code>) acumula fecha + actor + acción por fila.</p>
+      <span class="tag">Sheets</span>
     </div>
   </div>
 
-  <div class="section-title" style="margin-top:52px;margin-bottom:14px">
-    <p>Estados de seguimiento</p>
+  <!-- ESTADOS -->
+  <div class="section-title" style="margin-top:60px;margin-bottom:16px">
+    <p>8 estados de seguimiento — incluye caso especial v2</p>
   </div>
   <div class="estados">
     <div class="estado-badge" style="background:#e3f2fd;color:#1565c0">📬 Enviada</div>
@@ -489,227 +438,198 @@
     <div class="estado-badge" style="background:#f3e5f5;color:#6a1b9a">📖 En préstamo</div>
     <div class="estado-badge" style="background:#e0f2f1;color:#00695c">📗 Devuelta</div>
     <div class="estado-badge" style="background:#ffebee;color:#b71c1c">🚨 Vencida</div>
+    <div class="estado-badge" style="background:#fff8e1;color:#e65100">⏳ Pendiente — sin correo</div>
   </div>
 </section>
 
-<!-- ═══════════════════ MÓDULO DIGITK ═══════════════════ -->
-<section id="digitk">
+<!-- CORREOS_BIBLIOTECAS -->
+<section class="correos-section" id="correos">
   <div class="section-title">
-    <h2>Módulo 2 — Cargue <span class="blue">Repositorio Digitk</span></h2>
-    <p>Flujo de 4 pasos para cargar trabajos de grado al repositorio institucional de Areandina</p>
-    <div class="linea linea-blue"></div>
+    <h2>CORREOS_BIBLIOTECAS<span style="color:#69f0ae"> — tabla interna</span></h2>
+    <p>25 instituciones de la Red Reunir (Risaralda + Eje Cafetero)</p>
+    <div class="linea" style="background:#69f0ae"></div>
   </div>
-
-  <div class="digitk-info">
-    <div class="text">
-      <h3>Formulario inteligente para el <span>repositorio Digitk</span></h3>
-      <p>Un formulario web de 4 pasos guía al estudiante a través de la carga de su trabajo de grado, validando cada campo y organizando automáticamente los archivos en una carpeta de Drive compartida.</p>
-      <ul>
-        <li><span>🎓</span> Soporte para pregrado, maestría y doctorado</li>
-        <li><span>🏛️</span> 8 facultades y más de 35 programas académicos</li>
-        <li><span>📄</span> Carga de 3 archivos PDF requeridos (Turnitin, autorización, trabajo final)</li>
-        <li><span>📁</span> Organización automática en Google Drive</li>
-        <li><span>📧</span> Correo de confirmación con ID de solicitud</li>
-        <li><span>✅</span> Validación de correo institucional @areandina.edu.co</li>
-        <li><span>🖱️</span> Drag & drop para carga de archivos</li>
-        <li><span>📋</span> Resumen de confirmación antes de enviar</li>
-      </ul>
+  <div class="correos-grid">
+    <div class="correos-card">
+      <h4>⚙️ Cómo funciona</h4>
+      <p>Un objeto JS con las 25 instituciones de la red. El solicitante elige el nombre de una lista desplegable; <code style="display:inline;background:rgba(0,0,0,.3);padding:1px 6px;border-radius:3px;color:#b9f6ca">getCorreoBiblioteca()</code> hace el match por nombre exacto y retorna el correo.</p>
+      <code>"Universidad Tecnológica de Pereira": "biblioteca@utp.edu.co",
+"Universidad Católica de Pereira":    "biblioteca@ucp.edu.co",
+"SENA Regional Risaralda":            "biblioteca.risaralda@sena.edu.co",
+// ... 22 instituciones más
+"Institución sin correo aún":         null</code>
     </div>
-    <div class="digitk-preview">
-      <p style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,.6);margin-bottom:18px;text-transform:uppercase">4 pasos del formulario</p>
-      <div class="step-pill">
-        <div class="step-num">1</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">Datos de contacto</div>
-          <div style="font-size:11px;opacity:.7">Correo institucional + sede</div>
-        </div>
-      </div>
-      <div class="step-pill">
-        <div class="step-num">2</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">Facultad y Programa</div>
-          <div style="font-size:11px;opacity:.7">Filtrado automático por facultad</div>
-        </div>
-      </div>
-      <div class="step-pill">
-        <div class="step-num">3</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">Datos del trabajo</div>
-          <div style="font-size:11px;opacity:.7">Título, autores, tipo y año</div>
-        </div>
-      </div>
-      <div class="step-pill">
-        <div class="step-num">4</div>
-        <div>
-          <div style="font-size:13px;font-weight:700">Archivos requeridos</div>
-          <div style="font-size:11px;opacity:.7">Turnitin · Autorización · PDF final</div>
-        </div>
+    <div class="correos-card">
+      <h4>🚨 Caso especial — sin correo</h4>
+      <p>Si la institución tiene <code style="display:inline;background:rgba(0,0,0,.3);padding:1px 6px;border-radius:3px;color:#b9f6ca">null</code> como valor, el sistema no falla: la solicitud queda en estado <strong style="color:#ffcc80">Pendiente</strong> y se envía alerta automática con todos los datos a <strong style="color:#80cbc4">alabrada3@areandina.edu.co</strong> para gestión manual.</p>
+      <div class="warn">
+        📌 Esto evita solicitudes perdidas para bibliotecas nuevas en la red o con correo desactualizado. Basta actualizar el objeto JS para activar el flujo automático.
       </div>
     </div>
-  </div>
-
-  <!-- Tipos de documento -->
-  <div class="section-title" style="margin-top:64px;margin-bottom:20px">
-    <p style="font-weight:700;color:#444">Tipos de documento soportados en Digitk</p>
-  </div>
-  <div class="estados" style="max-width:920px">
-    <div class="estado-badge" style="background:#e3f2fd;color:#1565c0">🎓 Tesis Pregrado</div>
-    <div class="estado-badge" style="background:#e8eaf6;color:#3949ab">🎓 Tesis Maestría</div>
-    <div class="estado-badge" style="background:#f3e5f5;color:#7b1fa2">🎓 Tesis Doctorado</div>
-    <div class="estado-badge" style="background:#e8f5e9;color:#2e7d32">📰 Artículo de revista</div>
-    <div class="estado-badge" style="background:#fff8e1;color:#f57f17">📖 Libro / Capítulo</div>
-    <div class="estado-badge" style="background:#fce4ec;color:#c62828">🔬 Proyecto de Investigación</div>
-    <div class="estado-badge" style="background:#e0f2f1;color:#00695c">📋 Documento de Trabajo</div>
-    <div class="estado-badge" style="background:#f9fbe7;color:#558b2f">🏛️ Evento / Conferencia</div>
-    <div class="estado-badge" style="background:#fff3e0;color:#e65100">📑 Monografía</div>
-    <div class="estado-badge" style="background:#efebe9;color:#4e342e">⚙️ Patente</div>
   </div>
 </section>
 
-<!-- ═══════════════════ TECNOLOGÍA ═══════════════════ -->
+<!-- ACCIONES POR LINK -->
+<section id="acciones">
+  <div class="section-title">
+    <h2>Acciones por <span>link — doGet(e)</span></h2>
+    <p>Cada botón de correo es una URL al Web App. Sin login, sin contraseñas.</p>
+    <div class="linea"></div>
+  </div>
+  <div class="actions-grid">
+    <div class="action-card">
+      <div class="method">?action=aprobar</div>
+      <h4>✅ Aprobar solicitud</h4>
+      <p>Cambia el estado a <strong>Aprobada</strong>, notifica al solicitante y registra en log.</p>
+    </div>
+    <div class="action-card">
+      <div class="method">?action=rechazar</div>
+      <h4>❌ Iniciar rechazo</h4>
+      <p>Muestra <code>paginaRechazo()</code> con textarea para el motivo. Es paso 1 de 2.</p>
+    </div>
+    <div class="action-card" style="border-left-color:#e65100">
+      <div class="method" style="background:#fff3e0;color:#e65100">?action=confirmar_rechazo</div>
+      <h4>❌ Confirmar rechazo</h4>
+      <p>Guarda el motivo, cambia estado a <strong>Rechazada</strong> y notifica al solicitante. Paso 2 de 2.</p>
+    </div>
+    <div class="action-card">
+      <div class="method">?action=confirmar_prestamo</div>
+      <h4>📖 Confirmar recepción</h4>
+      <p>Calcula fecha de devolución <strong>+15 días</strong> y crea evento en Google Calendar.</p>
+    </div>
+    <div class="action-card">
+      <div class="method">?action=confirmar_devolucion</div>
+      <h4>📗 Registrar devolución</h4>
+      <p>Borra el evento de Calendar y cierra el ciclo completo de la solicitud.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
 <section id="tecnologia" class="gray">
   <div class="section-title">
-    <h2>Stack <span class="green">tecnológico</span></h2>
-    <p>100% Google Suite — sin costos adicionales, sin servidores propios</p>
-    <div class="linea linea-green"></div>
+    <h2>Stack <span>tecnológico</span></h2>
+    <p>100% Google Suite · Apps Script · Costo: $0</p>
+    <div class="linea"></div>
   </div>
   <div class="stack-grid">
-    <div class="stack-card green-top">
+    <div class="stack-card">
       <div class="icon">📋</div>
-      <h4>Google Forms</h4>
-      <p>Formulario ILL accesible desde cualquier dispositivo</p>
-      <span class="badge badge-green">ILL</span>
+      <h4>FormApp</h4>
+      <p>25 instituciones en lista desplegable. Sin campo de correo manual.</p>
+      <span class="badge-green">GRATUITO</span>
     </div>
-    <div class="stack-card blue-top">
-      <div class="icon">🌐</div>
-      <h4>HTML / Apps Script</h4>
-      <p>Formulario Digitk embebido en web con validación por pasos</p>
-      <span class="badge badge-blue">DIGITK</span>
-    </div>
-    <div class="stack-card both-top">
-      <div class="icon">📊</div>
-      <h4>Google Sheets</h4>
-      <p>Base de datos central: trazabilidad ILL y registro Digitk</p>
-      <span class="badge badge-green">ILL</span>
-      <span class="badge badge-blue">DIGITK</span>
-    </div>
-    <div class="stack-card both-top">
+    <div class="stack-card">
       <div class="icon">⚙️</div>
       <h4>Apps Script</h4>
-      <p>Motor de automatización: triggers, flujos y lógica de ambos módulos</p>
-      <span class="badge badge-green">ILL</span>
-      <span class="badge badge-blue">DIGITK</span>
+      <p>Motor central: triggers, doGet, CORREOS_BIBLIOTECAS, appendLog.</p>
+      <span class="badge-green">GRATUITO</span>
     </div>
-    <div class="stack-card both-top">
+    <div class="stack-card">
+      <div class="icon">📊</div>
+      <h4>Sheets</h4>
+      <p>Base de datos con 19 columnas e historial cronológico por fila.</p>
+      <span class="badge-green">GRATUITO</span>
+    </div>
+    <div class="stack-card">
       <div class="icon">📧</div>
-      <h4>Gmail</h4>
-      <p>Notificaciones HTML automáticas: aprobaciones ILL y confirmaciones Digitk</p>
-      <span class="badge badge-green">ILL</span>
-      <span class="badge badge-blue">DIGITK</span>
+      <h4>MailApp</h4>
+      <p>Correos HTML automáticos: 2 simultáneos al inicio + notificaciones en cada estado.</p>
+      <span class="badge-green">GRATUITO</span>
     </div>
-    <div class="stack-card green-top">
+    <div class="stack-card">
       <div class="icon">📅</div>
-      <h4>Google Calendar</h4>
-      <p>Eventos automáticos de vencimiento por cada préstamo ILL activo</p>
-      <span class="badge badge-green">ILL</span>
+      <h4>CalendarApp</h4>
+      <p>Evento automático de vencimiento al confirmar préstamo. Se borra al devolver.</p>
+      <span class="badge-green">GRATUITO</span>
     </div>
-    <div class="stack-card blue-top">
-      <div class="icon">📁</div>
-      <h4>Google Drive</h4>
-      <p>Organización automática de carpetas y archivos PDF de cada solicitud Digitk</p>
-      <span class="badge badge-blue">DIGITK</span>
+  </div>
+
+  <!-- SHEET 19 columnas -->
+  <div style="margin-top:52px">
+    <div class="section-title" style="margin-bottom:28px">
+      <p style="font-weight:700;font-size:15px;color:#444">Google Sheet — 19 columnas de trazabilidad</p>
+    </div>
+    <div class="sheet-info">
+      <div class="sheet-header">📊 Hoja: Solicitudes — una fila por solicitud, historial completo</div>
+      <div class="sheet-body">
+        <div class="sheet-cols">
+          <span class="col-chip">ID solicitud</span>
+          <span class="col-chip">Timestamp</span>
+          <span class="col-chip">Nombre</span>
+          <span class="col-chip">Correo solicitante</span>
+          <span class="col-chip">Institución solicitante</span>
+          <span class="col-chip">Biblioteca prestadora</span>
+          <span class="col-chip">Correo biblioteca</span>
+          <span class="col-chip">Tipo material</span>
+          <span class="col-chip">Título</span>
+          <span class="col-chip">Autor</span>
+          <span class="col-chip">Observaciones</span>
+          <span class="col-chip">Estado</span>
+          <span class="col-chip">Motivo rechazo</span>
+          <span class="col-chip">Fecha aprobación</span>
+          <span class="col-chip">Fecha préstamo</span>
+          <span class="col-chip">Fecha devolución</span>
+          <span class="col-chip">ID evento Calendar</span>
+          <span class="col-chip">Recordatorio enviado</span>
+          <span class="col-chip special">Log historial (S)</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ FUNCIONALIDADES ═══════════════════ -->
-<section id="funcionalidades">
+<!-- FUNCIONES DE MANTENIMIENTO -->
+<section>
   <div class="section-title">
-    <h2>Funcionalidades del <span class="green">sistema</span></h2>
-    <div class="linea linea-green"></div>
+    <h2>Funciones de <span>mantenimiento</span></h2>
+    <p>Herramientas para configurar y reparar el sistema sin tocar datos</p>
+    <div class="linea"></div>
   </div>
-  <div class="features-grid">
-    <div class="feature-card green-left">
-      <div class="feature-tag tag-green">ILL</div>
-      <div class="ico">🤖</div>
-      <h3>Automatización total ILL</h3>
-      <p>Desde el formulario hasta la devolución, el sistema gestiona cada etapa sin intervención manual.</p>
+  <div class="actions-grid">
+    <div class="action-card">
+      <div class="method">setupInicial()</div>
+      <h4>🔧 Configuración inicial</h4>
+      <p>Crea las hojas <strong>Solicitudes</strong> y <strong>Bibliotecas</strong>, instala el trigger diario de vencimientos.</p>
     </div>
-    <div class="feature-card green-left">
-      <div class="feature-tag tag-green">ILL</div>
-      <div class="ico">🖱️</div>
-      <h3>Aprobación con un clic</h3>
-      <p>El bibliotecario aprueba o rechaza directamente desde su correo, sin acceder a ningún sistema adicional.</p>
+    <div class="action-card">
+      <div class="method">crearFormularioReunir()</div>
+      <h4>📋 Crear formulario</h4>
+      <p>Genera el Google Form desde cero con todos los campos y la lista de 25 instituciones.</p>
     </div>
-    <div class="feature-card green-left">
-      <div class="feature-tag tag-green">ILL</div>
-      <div class="ico">⏰</div>
-      <h3>Control de vencimientos</h3>
-      <p>Recordatorios automáticos 3 días antes y marcado de préstamos vencidos cada mañana a las 8am.</p>
+    <div class="action-card">
+      <div class="method">ajustarFormularioReunir()</div>
+      <h4>🔄 Actualizar formulario</h4>
+      <p>Actualiza la lista de instituciones si cambian, sin recrear el formulario completo.</p>
     </div>
-    <div class="feature-card green-left">
-      <div class="feature-tag tag-green">ILL</div>
-      <div class="ico">🏛️</div>
-      <h3>Multi-institución</h3>
-      <p>Diseñado para redes con múltiples bibliotecas, diferentes dominios y responsables por institución.</p>
+    <div class="action-card">
+      <div class="method">repararTriggerFormulario()</div>
+      <h4>⚡ Reparar trigger</h4>
+      <p>Borra triggers viejos y reconecta <code>onFormSubmit</code> si el flujo automático se interrumpe.</p>
     </div>
-    <div class="feature-card blue-left">
-      <div class="feature-tag tag-blue">DIGITK</div>
-      <div class="ico">📋</div>
-      <h3>Formulario de 4 pasos</h3>
-      <p>Wizard guiado con validación en cada paso, resumen de revisión y barra de progreso visual.</p>
+    <div class="action-card">
+      <div class="method">appendLog()</div>
+      <h4>📜 Historial cronológico</h4>
+      <p>Acumula en la columna S cada acción con fecha, actor y tipo de evento. Nunca sobreescribe.</p>
     </div>
-    <div class="feature-card blue-left">
-      <div class="feature-tag tag-blue">DIGITK</div>
-      <div class="ico">🎓</div>
-      <h3>Catálogo académico completo</h3>
-      <p>8 facultades, más de 35 programas y 15+ tipos de documento filtrados dinámicamente.</p>
-    </div>
-    <div class="feature-card blue-left">
-      <div class="feature-tag tag-blue">DIGITK</div>
-      <div class="ico">📁</div>
-      <h3>Drive automatizado</h3>
-      <p>Los 3 PDFs requeridos se organizan automáticamente en una carpeta de Drive compartida con el solicitante.</p>
-    </div>
-    <div class="feature-card blue-left">
-      <div class="feature-tag tag-blue">DIGITK</div>
-      <div class="ico">🔐</div>
-      <h3>Validación institucional</h3>
-      <p>Solo acepta correos @areandina.edu.co. Genera un ID único por solicitud para seguimiento.</p>
-    </div>
-    <div class="feature-card green-left">
-      <div class="feature-tag tag-green">AMBOS</div>
-      <div class="ico">📜</div>
-      <h3>Trazabilidad completa</h3>
-      <p>Registro cronológico de cada acción: quién actuó, qué cambió y cuándo — visible en la hoja de control.</p>
-    </div>
-    <div class="feature-card green-left">
-      <div class="feature-tag tag-green">AMBOS</div>
-      <div class="ico">📧</div>
-      <h3>Notificaciones inteligentes</h3>
-      <p>Correos HTML personalizados para cada actor y cada evento en los dos módulos del sistema.</p>
+    <div class="action-card">
+      <div class="method">verificarVencimientos()</div>
+      <h4>⏰ Trigger diario — 8am</h4>
+      <p>Recorre todos los préstamos activos: envía recordatorio a 3 días, marca vencida si pasó la fecha.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA DUAL -->
-<div class="cta-dual">
-  <div class="cta-panel green">
-    <h2>Módulo ILL — Red Reunir</h2>
-    <p>Préstamo interbibliotecario automatizado para la red de bibliotecas del Eje Cafetero.</p>
-    <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-white green" onclick="window.open(this.href,'_blank');return false;">Ver repositorio →</a>
-  </div>
-  <div class="cta-panel blue">
-    <h2>Módulo Digitk — Areandina</h2>
-    <p>Cargue automatizado de trabajos de grado al repositorio institucional Digitk.</p>
-    <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-white blue" onclick="window.open(this.href,'_blank');return false;">Ver documentación →</a>
-  </div>
+<!-- CTA -->
+<div class="cta">
+  <h2>Sistema documentado y listo para usar</h2>
+  <p>Configurable en menos de 30 minutos sobre cualquier cuenta de Google Workspace.</p>
+  <a href="https://github.com/REKOL08/reunir-ill-system" class="btn btn-white" onclick="window.open(this.href,'_blank');return false;">Ver repositorio en GitHub</a>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  Desarrollado para la <span class="g">Red Reunir</span> y <span class="b">Areandina Bibliotecas</span> —
-  Sistema de Gestión Bibliotecaria v2.0 |
+  Desarrollado para la <span>Red Reunir</span> — Sistema ILL v2.0 |
   Red de Unidades de Información de Risaralda y Eje Cafetero
 </footer>
 
