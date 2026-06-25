@@ -1,5 +1,7 @@
 # 📚 Sistema ILL — Red Reunir
 
+Interlibrary Loan, o en español: Préstamo Interbibliotecario.
+
 Sistema automatizado de gestión de Préstamo Interbibliotecario para la Red Reunir (Risaralda y Eje Cafetero, Colombia)
 
 `Estado: En producción` · `Stack: Google Apps Script` · `Costo: $0`
