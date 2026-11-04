@@ -1,209 +1,82 @@
 # 📚 Sistema ILL — Red Reunir
 
-Interlibrary Loan, o en español: Préstamo Interbibliotecario.
-
-Sistema automatizado de gestión de Préstamo Interbibliotecario para la Red Reunir (Risaralda y Eje Cafetero, Colombia)
+Préstamo Interbibliotecario (Interlibrary Loan) automatizado para la Red Reunir (Risaralda y Eje Cafetero, Colombia).
 
 `Estado: En producción` · `Stack: Google Apps Script` · `Costo: $0`
 
----
-
-## 🎯 ¿Qué es esto?
-
-Sistema de automatización completa del proceso de Préstamo Interbibliotecario (ILL) entre las bibliotecas de la red Reunir, construido 100% sobre Google Suite sin costos adicionales.
-
-Reemplaza el flujo manual de Google Forms + Excel sin automatización por un sistema con **resolución automática de correos**, notificaciones automáticas, aprobaciones con un clic y trazabilidad completa.
-
-**Novedad clave de esta versión:** el solicitante ya no escribe el correo de la biblioteca prestadora. El sistema lo resuelve internamente a partir de una tabla de instituciones registradas — elimina errores de tipeo y simplifica el formulario.
+> 💬 ¿Quieres conversar con ChatGPT sobre el sistema? Adjunta [`docs/CONTEXTO_CHATGPT.md`](docs/CONTEXTO_CHATGPT.md).
 
 ---
 
-## 🔄 Flujo del proceso
+## 🎯 ¿Qué es?
 
-Usuario llena Form (sin escribir correos)
+Automatiza todo el trámite entre usuario, **biblioteca de origen** y **biblioteca prestamista**: formulario sin correos manuales, aprobaciones con un clic (con página de confirmación), control de retiro (24 h/48 h), cálculo de devolución, recordatorios y trazabilidad completa. 100 % Google Workspace.
 
-→ Sistema identifica el correo de la biblioteca automáticamente
+## 🔄 Flujo
 
-→ Notificación a biblioteca prestadora (botones Aprobar/Rechazar)
+1. El usuario llena el Google Form.
+2. Notificación a la **biblioteca de origen** → valida al usuario (vigencia, multas) → Aprobar / Rechazar con motivo.
+3. Si aprueba → notificación a la **biblioteca prestamista** → confirma disponibilidad → Aprobar / Rechazar con motivo.
+4. Aprobada → el usuario tiene **24 h** para retirar (recordatorio); a las **48 h** se cierra como "No retirada".
+5. La prestamista confirma la **entrega** → fecha de devolución según los días de préstamo de esa biblioteca (15 por defecto, máx. 120) + evento en Calendar.
+6. Recordatorio **3 días antes**; si vence, estado "Vencida" y aviso al administrador.
+7. Registro de **devolución** con un clic.
 
-→ Aprobación/Rechazo (1 clic desde correo, sin login)
-
-→ Confirmación de recepción (botón en correo)
-
-→ Cálculo automático de fecha de devolución (+15 días) + evento en Calendar
-
-→ Recordatorio automático (3 días antes)
-
-→ Registro de devolución (1 clic) + notificación a biblioteca
-
----
-
-## 📬 Estados de cada solicitud
+## 📬 Estados
 
 | Estado | Descripción |
 |---|---|
-| 📬 Enviada | Formulario recibido, correo de biblioteca resuelto automáticamente |
-| 🔍 En validación | Notificación enviada a biblioteca prestadora |
-| ✅ Aprobada | Biblioteca prestadora aprobó |
-| ❌ Rechazada | Biblioteca prestadora rechazó (con motivo) |
-| 📖 En préstamo | Material entregado, devolución calculada (+15 días) |
-| 📗 Devuelta | Material devuelto y proceso cerrado |
-| 🚨 Vencida | Fecha de devolución superada sin registrar devolución |
-| ⏸️ Pendiente — sin correo biblioteca | Institución aún no tiene correo registrado; requiere gestión manual del administrador |
+| En validación — biblioteca de origen | Esperando validación del usuario |
+| Rechazada por biblioteca de origen | Origen no autorizó (con motivo) |
+| Aprobada por origen — verificando disponibilidad | Esperando a la prestamista |
+| Rechazada por no disponibilidad | Prestamista rechazó (con motivo) |
+| Aprobada — lista para retiro (24h) | Aprobada; plazo de retiro corriendo |
+| No retirada — plazo de retiro vencido | Cerrada a las 48 h |
+| En préstamo | Material entregado |
+| Devuelta | Proceso cerrado |
+| Vencida | Fecha de devolución superada |
+| Pendiente — sin correo biblioteca de origen/prestamista | Falta correo en la hoja Bibliotecas; se avisa al admin |
 
----
+## 📁 Estructura
 
-## 🛠️ Stack tecnológico
-
-| Herramienta | Uso | Costo |
-|---|---|---|
-| Google Forms | Formulario de solicitud (sin campo de correo manual) | Gratuito |
-| Google Sheets | Base de datos central (Solicitudes + Bibliotecas) | Gratuito |
-| Google Apps Script | Motor de automatización completo | Gratuito |
-| Gmail (MailApp) | Notificaciones automáticas con plantillas HTML | Gratuito |
-| Google Calendar | Recordatorio automático de fecha de devolución | Gratuito |
-
----
-
-## 📁 Estructura del repositorio
-
+```
 reunir-ill-system/
-
-│
-
-├── index.html          # Landing page (GitHub Pages)
-
-├── Code.gs              # Google Apps Script completo
-
-│   ├── CONFIG            # IDs, URLs, días de préstamo/recordatorio
-
-│   ├── CORREOS_BIBLIOTECAS  # Tabla institución → correo responsable
-
-│   ├── procesarFormularioReunir()  # Trigger principal del formulario
-
-│   ├── doGet()            # Acciones por link (aprobar/rechazar/etc.)
-
-│   ├── verificarVencimientos()  # Trigger diario de recordatorios
-
-│   ├── plantillaCorreo()  # Plantillas HTML de los 8 correos
-
-│   └── setupInicial()     # Configuración inicial (ejecutar 1 vez)
-
-└── README.md            # Este archivo
-
-
----
+├── index.html            # Landing (GitHub Pages)
+├── Code.gs               # Apps Script completo (sin datos sensibles)
+├── CHANGELOG.md
+├── README.md
+└── docs/CONTEXTO_CHATGPT.md   # Documento para conversar con ChatGPT
+```
 
 ## ⚙️ Instalación
 
-### 1. Crear el Google Sheet
-- Crear hoja nueva en [sheets.google.com](https://sheets.google.com)
-- Copiar el ID de la URL: `docs.google.com/spreadsheets/d/**ESTE_ID**/edit`
+1. Crear un Google Sheet y copiar su ID.
+2. En el Sheet: **Extensiones → Apps Script**, pegar `Code.gs`.
+3. En `CONFIG` reemplazar `SHEET_ID`, `SHEET_URL`, `ADMIN_EMAIL` (y `WEBAPP_URL`/`FORM_URL` después de los pasos 5 y 6).
+4. Ejecutar `setupInicial()` (crea hojas `Solicitudes` de 31 columnas y `Bibliotecas`, y el trigger diario).
+5. **Implementar → Aplicación web** (ejecutar como *Yo*, acceso *Cualquier persona*) y pegar la URL en `CONFIG.WEBAPP_URL`.
+6. Completar la hoja `Bibliotecas` (nombre, institución, correo, días de préstamo…) — o adaptar y ejecutar `poblarHojaBibliotecas()` —, luego ejecutar `crearFormularioReunir()` y `verUrlFormulario()`; pegar la URL en `CONFIG.FORM_URL`.
+7. Ejecutar `repararTriggerFormulario()` para conectar el formulario.
+8. Tras cada cambio de código: **Implementar → Administrar implementaciones → Nueva versión** (la URL se conserva).
 
-### 2. Configurar Apps Script
-- En el Sheet: **Extensiones → Apps Script**
-- Pegar el contenido de `Code.gs`
-- En `CONFIG`, reemplazar:
-  - `SHEET_ID` con el ID del Sheet
-  - `WEBAPP_URL` (se obtiene después de publicar — paso 3)
-  - `ADMIN_EMAIL` con el correo del administrador de la red
+## 🛠️ Mantenimiento
 
-### 3. Cargar las instituciones y sus correos
-- Edita el objeto `CORREOS_BIBLIOTECAS` con el nombre exacto de cada institución de tu red
-- Si aún no tienes el correo de una institución, déjalo en `null` — el sistema la marcará como `Pendiente` y avisará al administrador en lugar de fallar
-
-```javascript
-const CORREOS_BIBLIOTECAS = {
-  "Nombre exacto de la institución": "correo@institucion.edu.co",
-  "Institución sin correo aún":      null,
-};
-```
-
-### 4. Publicar como Web App
-- **Implementar → Nueva implementación**
-- Tipo: **Aplicación web**
-- Ejecutar como: **Yo**
-- Acceso: **Cualquier persona**
-- Copiar la URL generada y pegarla en `CONFIG.WEBAPP_URL`
-
-### 5. Ejecutar setup inicial
-- Seleccionar función `setupInicial`
-- Ejecutar — crea las hojas `Solicitudes` y `Bibliotecas`, los encabezados y el trigger diario de vencimientos
-
-### 6. Crear el formulario
-- Ejecutar la función `crearFormularioReunir()` — genera el Google Form automáticamente con los campos correctos, usando las instituciones de `CORREOS_BIBLIOTECAS` como listas desplegables
-- **El formulario ya no incluye un campo de correo de biblioteca** — ese dato se resuelve solo
-- Si más adelante agregas instituciones nuevas a la tabla, ejecuta `ajustarFormularioReunir()` para actualizar las listas sin recrear el formulario
-
-### 7. Conectar el trigger del formulario
-- Ejecutar `repararTriggerFormulario()` — limpia triggers viejos y conecta `procesarFormularioReunir` al evento de envío del formulario
-
-### 8. Activar GitHub Pages
-- **Settings → Pages → Branch: main → Folder: / (root)**
-- La landing estará disponible en: `https://REKOL08.github.io/reunir-ill-system`
-
----
-
-## 📧 Correos automáticos incluidos
-
-| Evento | Destinatario |
+| Función | Cuándo |
 |---|---|
-| Nueva solicitud recibida (con botones Aprobar/Rechazar) | Biblioteca prestadora |
-| Confirmación de envío con ID de seguimiento | Solicitante |
-| Solicitud aprobada (con botón confirmar recepción) | Solicitante |
-| Solicitud rechazada (con motivo) | Solicitante |
-| Material en préstamo + fecha límite de devolución | Solicitante |
-| Recordatorio 3 días antes de vencer | Solicitante |
-| Material vencido | Solicitante + Administrador |
-| Devolución registrada | Solicitante + Biblioteca prestadora |
-| Institución sin correo registrado | Administrador (gestión manual) |
+| `setupInicial()` | Una vez |
+| `crearFormularioReunir()` | Una vez |
+| `ajustarFormularioReunir()` | Al cambiar la lista de bibliotecas |
+| `repararTriggerFormulario()` | Si dejan de procesarse solicitudes |
+| `verUrlFormulario()` | Recuperar el enlace del formulario |
 
----
+## ⚠️ Límites de Google
 
-## 🗂️ Columnas de la hoja "Solicitudes"
+Correos/día: 100 (cuenta personal) · 1.500 (Workspace). Ejecución: 6 min por llamada. Cada solicitud completa genera ~8–10 correos.
 
-ID · Fecha solicitud · Nombre solicitante · Correo solicitante · Institución solicitante · Biblioteca prestadora · Correo biblioteca prestadora · Tipo material · Título · Autor · Observaciones · Estado · Fecha aprobación/rechazo · Motivo rechazo · Fecha préstamo · Fecha devolución esperada · Fecha devolución real · ID evento Calendar · **Historial** (log con fecha, actor y acción de cada cambio)
+## 🔐 Notas de seguridad
 
----
-
-## 🛠️ Funciones de mantenimiento
-
-| Función | Cuándo ejecutarla |
-|---|---|
-| `setupInicial()` | Una sola vez, al desplegar el sistema |
-| `crearFormularioReunir()` | Una sola vez, para generar el formulario |
-| `ajustarFormularioReunir()` | Cada vez que se agreguen instituciones a `CORREOS_BIBLIOTECAS` |
-| `repararTriggerFormulario()` | Si las solicitudes dejan de procesarse automáticamente |
-| `verUrlFormulario()` | Para recuperar el link público del formulario |
-
----
-
-## ⚠️ Límites del plan gratuito de Google
-
-| Recurso | Límite gratuito |
-|---|---|
-| Correos/día (cuenta personal) | 100 |
-| Correos/día (Google Workspace) | 1.500 |
-| Tiempo ejecución Apps Script | 6 min/llamada |
-| Almacenamiento Drive | 15 GB |
-
----
-
-## 📝 Notas
-
-- Cada nueva implementación de la Web App genera una URL distinta — actualiza `CONFIG.WEBAPP_URL` y reimplementa si es necesario
-- El sistema nunca pide al solicitante el correo de la biblioteca; si una institución no está en `CORREOS_BIBLIOTECAS`, la solicitud queda `Pendiente` sin perder los datos
-- El historial (columna `Historial`) acumula cada cambio de estado con fecha y actor — útil para auditoría
-
----
+El repositorio es público: **no subas** el ID del Sheet, la URL del Web App ni correos reales. Las acciones de los correos pasan por una página de confirmación, usan bloqueo contra dobles clics y escapan los parámetros mostrados.
 
 ## 👤 Desarrollado por
 
-**REKOL08** — AI Developer & Library Tech Specialist
-Universidad Tecnológica de Pereira | Areandina — BIDIG
-[github.com/REKOL08](https://github.com/REKOL08)
-
-Red Reunir — Sistema de Préstamo Interbibliotecario | Colombia
-
-
-
+**REKOL08** — AI Developer & Library Tech Specialist · Areandina — BIDIG · [github.com/REKOL08](https://github.com/REKOL08)
