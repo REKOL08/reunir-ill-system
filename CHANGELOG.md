@@ -6,3 +6,6 @@
 - Fix: el recordatorio de devolución ya no se repite (se verifica el Historial).
 - Seguridad: `escapeHtml()` para parámetros de URL mostrados en pantalla.
 - Docs: README actualizado y `docs/CONTEXTO_CHATGPT.md` para conversar con ChatGPT sobre el sistema.
+
+## 2026-11-06
+- Presentación "El viaje del libro" para el lanzamiento en la Feria del Libro de Pereira 2026 (9 de noviembre, 3:00 p. m., Salón Pueblo Rico, Expofuturo): guion en `docs/presentacion_feria/GUION.md` y capturas del sistema (formulario y Apps Script) en `docs/presentacion_feria/capturas/`. Las capturas no muestran datos personales.

@@ -73,6 +73,10 @@ reunir-ill-system/
 
 Correos/día: 100 (cuenta personal) · 1.500 (Workspace). Ejecución: 6 min por llamada. Cada solicitud completa genera ~8–10 correos.
 
+## 🎤 Presentación del lanzamiento
+
+"El viaje del libro" — Feria del Libro de Pereira 2026 (9 de noviembre, 3:00 p. m., Salón Pueblo Rico, Expofuturo). Guion de las 7 fases y del sistema paso a paso: [`docs/presentacion_feria/GUION.md`](docs/presentacion_feria/GUION.md).
+
 ## 🔐 Notas de seguridad
 
 El repositorio es público: **no subas** el ID del Sheet, la URL del Web App ni correos reales. Las acciones de los correos pasan por una página de confirmación, usan bloqueo contra dobles clics y escapan los parámetros mostrados.
