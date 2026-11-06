@@ -9,7 +9,7 @@ Antes, el préstamo interbibliotecario de REUNIR funcionaba con un formulario y 
 
 ## Las siete fases (paso a paso)
 1. **Idea.** Desde la coordinación anterior, las compañeras Yudy Mayerly y Claudia Trejos proyectaron un sistema automatizado para el préstamo interbibliotecario: una solución integral para la gestión del préstamo de la Red REUNIR.
-2. **Oportunidades de mejora.** Desde la coordinación de REUNIR se identificaron opciones de mejora en el formato vigente.
+2. **Oportunidades de mejora.** Desde la coordinación de REUNIR (coordinadora actual: Nelly Herrera Vargas) se identificaron opciones de mejora en el formato vigente.
 3. **Revisión del sistema actual.** Se revisó el sistema para identificar sus falencias.
 4. **Delegación.** Desde la revisión, la coordinación delegó en el analista de biblioteca Alejandro Labrada el concepto del sistema.
 5. **Construcción.** Alejandro identificó el flujo y realizó la conexión dentro de la consola de Apps Script, para tener trazabilidad de acuerdo con el flujo de trabajo de la persona encargada. Herramientas: Gmail, Hojas de cálculo, Calendar, Formularios (y Apps Script como motor); ninguna aplicación adicional.

@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El viaje del libro — Sistema ILL Red REUNIR</title>
+<meta name="description" content="Presentación interactiva del Sistema de Préstamo Interbibliotecario de la Red REUNIR. Feria del Libro de Pereira 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Rubik:wght@500;700&display=swap">
+<style>
+:root{--cream:#F7EFE3;--cream2:#EFE3D0;--mag:#C2276B;--pink:#E8438A;--pinkl:#FBE3EE;--green:#6DB33F;--dgreen:#3F7A1B;--greenl:#E7F3DA;--ink:#2F2F2F;--soft:#4A4A4A;--head:'Rubik','Trebuchet MS',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#1d1a1c;overflow:hidden;font-family:'Nunito Sans','Segoe UI',Arial,sans-serif;color:var(--ink)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--cream);overflow:hidden}
+#bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:drift 18s ease-in-out infinite alternate}
+.blob.b1{width:760px;height:760px;left:-200px;top:-260px;background:#F9C4DB}
+.blob.b2{width:700px;height:700px;right:-220px;bottom:-260px;background:#CFE8B5;animation-delay:-6s}
+.blob.b3{width:520px;height:520px;right:240px;top:-240px;background:#FFE2B8;opacity:.4;animation-delay:-11s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+.petal{position:absolute;top:-60px;width:20px;height:28px;border-radius:60% 0 60% 0;background:radial-gradient(circle at 30% 30%,#FFD3E6,#E8438A);opacity:.7;animation:fall linear infinite}
+@keyframes fall{0%{transform:translate(0,-60px) rotate(0)}50%{transform:translate(90px,560px) rotate(180deg)}100%{transform:translate(-30px,1180px) rotate(380deg)}}
+#bar{position:absolute;left:0;top:0;height:8px;background:linear-gradient(90deg,var(--mag),var(--green));width:0;z-index:20;transition:width .5s ease}
+.slide{position:absolute;inset:0;z-index:1;padding:92px 128px 150px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:scale(1.025);transition:opacity .55s ease,transform .7s ease,visibility 0s .55s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .7s ease}
+.eyebrow{font-size:28px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--mag)}
+h1,h2,h3{font-family:var(--head);font-weight:700;line-height:1.08}
+h2{font-size:68px}
+.sub{font-size:34px;line-height:1.4;color:var(--soft)}
+.r{opacity:0}
+.active .r{animation:rise .85s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d,0) * 1s)}
+@keyframes rise{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+.active .pop{animation:pop .7s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--d,0) * 1s)}
+.pop{opacity:0}
+.active .pin{animation:popin .7s cubic-bezier(.3,1.5,.5,1) backwards;animation-delay:calc(var(--d,0) * 1s)}
+@keyframes popin{from{opacity:0;transform:scale(.4)}}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+[data-step]{opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+[data-step].on{opacity:1;transform:none;pointer-events:auto}
+.chip{display:inline-block;font-size:28px;font-weight:700;padding:12px 28px;border-radius:999px}
+.c-g{background:var(--green);color:#1F2A14}.c-m{background:var(--mag);color:#fff}.c-w{background:#fff;color:var(--mag);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.foot{position:absolute;left:0;right:0;bottom:0;height:96px;z-index:15;display:flex;align-items:center;gap:28px;padding:0 128px;font-size:24px;color:#6B6B6B}
+.foot img{height:44px}
+.foot .grow{flex:1}
+.dots{display:flex;gap:10px}.dots i{width:12px;height:12px;border-radius:50%;background:#D9CBB8;transition:all .4s}.dots i.on{background:var(--mag);width:34px;border-radius:8px}
+.navb{width:56px;height:56px;border-radius:50%;border:none;background:#fff;color:var(--mag);font-size:30px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.12);transition:transform .2s}
+.navb:hover{transform:scale(1.1)}
+/* cover */
+.cover{flex-direction:row;align-items:center;gap:80px}
+.cover .l{flex:1;display:flex;flex-direction:column;gap:30px}
+.cover h1{font-size:150px;line-height:.98}
+.cover h1 span span{display:inline-block;opacity:0}
+.cover.active h1 span span{animation:letter .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.25s + var(--i) * .05s)}
+@keyframes letter{from{opacity:0;transform:translateY(80px) rotate(8deg)}to{opacity:1;transform:none}}
+.bookwrap{position:relative;width:700px;height:640px;flex:none}
+.book{position:absolute;left:30px;top:150px;width:640px;height:400px;perspective:1800px}
+.book .cov{position:absolute;inset:-18px;background:var(--mag);border-radius:22px;box-shadow:0 30px 60px rgba(120,20,70,.35)}
+.pgl,.flip{position:absolute;top:0;width:320px;height:400px;background:repeating-linear-gradient(180deg,transparent 0 38px,#EADFCB 38px 40px),linear-gradient(90deg,#FFFDF8,#F6ECDC)}
+.pgl{left:0;border-radius:10px 0 0 10px}
+.flip{left:320px;transform-origin:left center;border-radius:0 10px 10px 0;animation:flipp 6s ease-in-out infinite;opacity:0}
+.flip:nth-of-type(2){animation-delay:0s}.flip:nth-of-type(3){animation-delay:2s}.flip:nth-of-type(4){animation-delay:4s}
+@keyframes flipp{0%{transform:rotateY(0);opacity:1}30%{transform:rotateY(-175deg);opacity:1}36%{opacity:0}100%{transform:rotateY(-175deg);opacity:0}}
+.ribbon{position:absolute;left:300px;top:-18px;width:34px;height:140px;background:var(--green);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)}
+.flower{position:absolute;right:-30px;bottom:-30px;width:340px;height:340px;animation:sway 6s ease-in-out infinite alternate;transform-origin:70% 70%}
+.flower.f2{left:-40px;top:20px;right:auto;bottom:auto;width:220px;height:220px;animation-duration:7.5s}
+@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}
+.plane{position:absolute;width:90px;left:-100px;top:90px;animation:flyby 9s linear infinite}
+@keyframes flyby{0%{transform:translate(0,40px) rotate(8deg)}100%{transform:translate(900px,-30px) rotate(-4deg)}}
+/* map */
+.mapbox{position:relative;margin-top:10px;flex:1}
+.map text{font-family:var(--head);font-size:30px;font-weight:700;fill:#2F2F2F}
+.ring{transform-box:fill-box;transform-origin:center;animation:ring 2.6s ease-out infinite}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.route{fill:none;stroke:var(--mag);stroke-width:6;stroke-dasharray:4 16;stroke-linecap:round;animation:dash 2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-40}}
+/* antes hoy */
+.split{display:flex;gap:56px;flex:1;margin-top:34px;align-items:stretch}
+.panel{flex:1;border-radius:32px;padding:44px;position:relative;overflow:hidden}
+.panel.a{background:#EFE3D0}.panel.h{background:#fff;box-shadow:0 20px 50px rgba(194,39,107,.14)}
+.panel h3{font-size:48px;margin-bottom:10px}
+.papers{position:relative;height:290px}
+.paper{position:absolute;width:200px;height:240px;background:#fff;border-radius:6px;box-shadow:0 8px 18px rgba(0,0,0,.15);background-image:repeating-linear-gradient(180deg,transparent 0 30px,#D9DDE8 30px 32px);animation:jit 3s ease-in-out infinite alternate}
+@keyframes jit{from{transform:rotate(var(--r)) translate(0,0)}to{transform:rotate(calc(var(--r) + 4deg)) translate(8px,-10px)}}
+.q{position:absolute;font-family:var(--head);font-size:90px;color:var(--mag);opacity:.7;animation:floatq 3s ease-in-out infinite alternate}
+@keyframes floatq{from{transform:translateY(0)}to{transform:translateY(-24px)}}
+.flowv{display:flex;flex-direction:column;gap:14px;margin:8px 0 18px}
+.fn{display:flex;align-items:center;gap:18px;font-size:30px;font-weight:700;background:var(--greenl);border-radius:16px;padding:14px 22px;position:relative}
+.fn i{width:34px;height:34px;border-radius:50%;background:var(--green);display:grid;place-items:center;color:#1F2A14;font-style:normal;font-size:22px}
+.fn::after{content:"";position:absolute;left:38px;top:100%;width:3px;height:14px;background:var(--green)}
+.fn:last-child::after{display:none}
+/* camino */
+.camino{position:relative;width:1664px;height:400px;margin-top:6px}
+.camino svg{position:absolute;inset:0}
+.cpath{fill:none;stroke:#E3CFB8;stroke-width:14;stroke-linecap:round}
+.route2{fill:none;stroke:var(--mag);stroke-width:8;stroke-linecap:round;stroke-dasharray:var(--L);stroke-dashoffset:var(--L)}
+.active .route2{animation:draw 2.6s ease forwards .3s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.st{position:absolute;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:#fff;border:6px solid #D9CBB8;display:grid;place-items:center;font-family:var(--head);font-size:34px;color:#8a7f72;cursor:pointer;transition:all .45s}
+.st.reached{border-color:var(--green);color:var(--dgreen)}
+.st.cur{background:var(--mag);border-color:var(--mag);color:#fff;transform:scale(1.25);box-shadow:0 0 0 14px rgba(194,39,107,.18)}
+.stl{position:absolute;width:210px;margin-left:-105px;text-align:center;font-size:27px;font-weight:700;color:#5b5247;transition:color .4s}
+.stl.cur{color:var(--mag)}
+.tok{position:absolute;width:74px;height:74px;margin:-96px 0 0 -37px;transition:left .9s cubic-bezier(.5,0,.2,1),top .9s cubic-bezier(.5,0,.2,1);z-index:3;filter:drop-shadow(0 8px 8px rgba(0,0,0,.25));animation:bob 1.4s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.card{background:#fff;border-radius:28px;padding:30px 40px;box-shadow:0 18px 44px rgba(0,0,0,.1);display:flex;gap:32px;align-items:center;min-height:196px;margin-top:10px}
+.card .n{font-family:var(--head);font-size:100px;color:var(--mag);line-height:1;min-width:110px}
+.card h3{font-size:46px;margin-bottom:6px}
+.card p{font-size:31px;line-height:1.35;color:var(--soft)}
+.card .who{margin-left:auto;text-align:right;font-size:26px;color:var(--dgreen);font-weight:700;max-width:420px}
+.card.sw{animation:swap .6s ease}
+@keyframes swap{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+/* herramientas */
+.two{display:flex;gap:60px;flex:1;align-items:center}
+.orbit-wrap{position:relative;width:740px;height:740px;flex:none}
+.ring-o{position:absolute;inset:60px;border:3px dashed #D9B8C8;border-radius:50%}
+.center-o{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px;background:#fff;border-radius:50%;display:grid;place-items:center;box-shadow:0 14px 40px rgba(194,39,107,.25);z-index:2}
+.center-o img{width:110px}
+.center-o::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:4px solid var(--mag);opacity:.4;animation:ring 2.6s ease-out infinite}
+.orb{position:absolute;inset:0;animation:spin 28s linear infinite}
+.orb .it{position:absolute;left:50%;top:50%;width:150px;height:170px;margin:-85px -75px;transform:rotate(var(--a)) translateY(-300px) rotate(calc(var(--a) * -1))}
+.it .cnt{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;gap:6px;animation:spin 28s linear infinite reverse}
+.it img{width:104px;height:104px;background:#fff;border-radius:26px;padding:16px;box-shadow:0 10px 26px rgba(0,0,0,.14)}
+.it span{font-size:25px;font-weight:700;background:#fff;border-radius:999px;padding:2px 14px;white-space:nowrap}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rl{display:flex;flex-direction:column;gap:20px;flex:1}
+.rl div{display:flex;align-items:center;gap:22px;font-size:34px;background:#fff;border-radius:22px;padding:20px 28px;box-shadow:0 10px 26px rgba(0,0,0,.07)}
+.rl img{width:56px;height:56px;flex:none}
+.rl b{font-family:var(--head);min-width:240px}
+/* frames */
+.browser{background:#fff;border-radius:22px;box-shadow:0 26px 60px rgba(0,0,0,.18);overflow:hidden;flex:none}
+.browser .tb{height:46px;background:#EDE5D8;display:flex;align-items:center;gap:10px;padding:0 20px}
+.browser .tb i{width:14px;height:14px;border-radius:50%;background:#D9A39B}.browser .tb i:nth-child(2){background:#E8CC8C}.browser .tb i:nth-child(3){background:#9CC98D}
+.browser .tb em{margin-left:16px;font-style:normal;font-size:20px;color:#8a7f72}
+.browser img{display:block;width:100%}
+.callouts{display:flex;flex-direction:column;gap:22px;flex:1}
+.co{display:flex;gap:22px;align-items:center;background:#fff;border-radius:24px;padding:24px 30px;font-size:34px;line-height:1.3;box-shadow:0 12px 30px rgba(0,0,0,.08);border-left:12px solid var(--mag)}
+.co.g{border-left-color:var(--green)}
+.co b{font-family:var(--head);font-size:56px;color:var(--mag);min-width:60px}
+.scan{position:relative}
+.scan::after{content:"";position:absolute;left:0;right:0;height:80px;top:0;background:linear-gradient(180deg,transparent,rgba(194,39,107,.18),transparent);animation:scan 3.4s ease-in-out infinite}
+@keyframes scan{from{transform:translateY(0)}to{transform:translateY(520px)}}
+/* flujo */
+.track{position:relative;display:flex;justify-content:space-between;margin:110px 20px 0;height:150px}
+.track::before{content:"";position:absolute;left:60px;right:60px;top:38px;height:8px;background:#E3CFB8;border-radius:4px}
+.fs{position:relative;width:230px;text-align:center;cursor:pointer}
+.fs .dot{width:84px;height:84px;margin:0 auto;border-radius:50%;background:#fff;border:6px solid #D9CBB8;display:grid;place-items:center;font-family:var(--head);font-size:36px;color:#8a7f72;transition:all .45s;position:relative;z-index:1}
+.fs.reached .dot{border-color:var(--green);color:var(--dgreen)}
+.fs.cur .dot{background:var(--mag);border-color:var(--mag);color:#fff;transform:scale(1.2);box-shadow:0 0 0 14px rgba(194,39,107,.18)}
+.fs p{font-size:27px;font-weight:700;margin-top:18px;color:#5b5247}
+.fs.cur p{color:var(--mag)}
+.ftok{position:absolute;top:-62px;width:70px;height:70px;margin-left:-35px;transition:left .9s cubic-bezier(.5,0,.2,1);z-index:3;filter:drop-shadow(0 8px 8px rgba(0,0,0,.25));animation:bob 1.4s ease-in-out infinite alternate}
+.mail{display:inline-flex;align-items:center;gap:10px;font-size:26px;font-weight:700;background:var(--pinkl);color:var(--mag);padding:8px 20px;border-radius:999px;margin-top:12px}
+.timers{display:flex;gap:18px;margin-top:10px}
+/* hoja */
+.grid31{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:22px}
+.col{font-size:22px;font-weight:700;padding:13px 10px;border-radius:12px;text-align:center;opacity:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.active .col{animation:pop .5s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(.4s + var(--i) * .07s)}
+.g1{background:var(--pinkl);color:#7a1245}.g2{background:var(--greenl);color:#2c5712}.g3{background:#FFE9C9;color:#7a4a05}.g4{background:#F6D4E4;color:#7a1245}.g5{background:#D6EBC2;color:#2c5712}.g6{background:#E7E1F5;color:#4a3a85}.g7{background:var(--ink);color:#fff}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:22px}
+.legend span{padding:6px 16px;border-radius:999px;font-weight:700}
+.bignum{font-family:var(--head);font-size:150px;color:var(--mag);line-height:1}
+/* avisos */
+.kpis{display:flex;gap:36px;margin-top:34px}
+.kpi{flex:1;background:#fff;border-radius:32px;padding:36px 36px 34px;box-shadow:0 18px 44px rgba(0,0,0,.09);position:relative;overflow:hidden}
+.kpi .v{font-family:var(--head);font-size:150px;line-height:1;color:var(--mag)}
+.kpi .v small{font-size:60px;margin-left:8px;color:var(--dgreen)}
+.kpi h3{font-size:38px;margin:8px 0}
+.kpi p{font-size:29px;line-height:1.35;color:var(--soft)}
+.who2{display:flex;gap:18px;margin-top:34px;flex-wrap:wrap}
+.who2 span{display:inline-flex;align-items:center;gap:12px;font-size:29px;font-weight:700;background:#fff;border-radius:999px;padding:14px 28px;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.env{width:34px;height:24px;border-radius:5px;background:var(--mag);position:relative;display:inline-block}
+.env::after{content:"";position:absolute;left:0;right:0;top:0;height:12px;background:#fff;opacity:.55;clip-path:polygon(0 0,100% 0,50% 100%)}
+.bounce{animation:bob 1.2s ease-in-out infinite alternate}
+/* cierre */
+.end{background:linear-gradient(135deg,#C2276B,#8E1A4F);color:#fff;justify-content:center}
+.end h1{font-size:112px;line-height:1.06}
+.end h1 span span{display:inline-block;opacity:0}
+.end.active h1 span span{animation:letter .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.2s + var(--i) * .12s)}
+.end .sub{color:#FFE3F0}
+.poster{position:absolute;right:128px;top:120px;width:380px;border-radius:20px;box-shadow:0 30px 70px rgba(0,0,0,.4);transform:rotate(5deg);animation:floatp 5s ease-in-out infinite alternate;border:8px solid #fff}
+@keyframes floatp{from{transform:rotate(5deg) translateY(0)}to{transform:rotate(3deg) translateY(-22px)}}
+.btn{display:inline-block;font-size:34px;font-weight:700;background:#fff;color:var(--mag);padding:20px 44px;border-radius:999px;text-decoration:none;box-shadow:0 14px 34px rgba(0,0,0,.25);transition:transform .2s}
+.btn:hover{transform:scale(1.06)}
+.credit{font-size:26px;color:#FFE3F0;line-height:1.6}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div id="bar"></div>
+
+<!-- 1 PORTADA -->
+<section class="slide cover" id="s-cover">
+<div class="l">
+<img class="r" style="--d:.1;width:600px" src="assets/logo_reunir_completo.png" alt="Logo de REUNIR">
+<p class="eyebrow r" style="--d:.2">Feria del Libro de Pereira 2026 · XII versión</p>
+<h1 id="t1" aria-label="El viaje del libro"></h1>
+<p class="sub r" style="--d:1.2;max-width:900px">Así nació el Sistema de Préstamo Interbibliotecario para Risaralda y el Eje Cafetero.</p>
+<div class="r" style="--d:1.5;display:flex;gap:20px;flex-wrap:wrap"><span class="chip c-g">9 de noviembre · 3:00 p. m.</span><span class="chip c-m">Salón Pueblo Rico · Expofuturo</span></div>
+</div>
+<div class="bookwrap pop" style="--d:.5">
+<svg class="plane" viewBox="0 0 90 60"><path d="M2 30 88 4 62 56 46 36 30 50 32 32Z" fill="#fff" stroke="#C2276B" stroke-width="3" stroke-linejoin="round"/><path d="M32 32 88 4 46 36Z" fill="#F9C4DB"/></svg>
+<div class="book"><div class="cov"></div><div class="pgl"></div><div class="flip"></div><div class="flip"></div><div class="flip"></div><div class="ribbon"></div></div>
+<svg class="flower f2" viewBox="-120 -120 240 240"><use href="#fl"/></svg>
+<svg class="flower" viewBox="-120 -120 240 240"><use href="#fl"/></svg>
+</div>
+</section>
+
+<!-- 2 MAPA -->
+<section class="slide" id="s-mapa">
+<p class="eyebrow r">El punto de partida</p>
+<h2 class="r" style="--d:.1;margin-top:6px">Un libro quiere viajar entre bibliotecas</h2>
+<div class="mapbox r" style="--d:.3">
+<svg class="map" viewBox="0 0 1664 600" width="1664" height="600">
+<defs><radialGradient id="land" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#E7F3DA"/><stop offset="1" stop-color="#CFE8B5"/></radialGradient></defs>
+<path d="M120 380C100 250 260 150 460 150S760 60 980 120 1400 110 1520 270 1540 470 1300 520 800 590 520 560 140 500 120 380Z" fill="url(#land)" opacity=".85"/>
+<path id="rt" class="route" d="M520 400C560 340 580 330 640 320S780 300 840 290S1010 250 1120 215C1260 175 1400 290 1370 400S1100 520 940 470S640 520 520 400Z"/>
+<g id="nodes"></g>
+<g><circle r="40" fill="#fff" stroke="#C2276B" stroke-width="5"/><g transform="translate(-20,-18)"><path d="M0 4C10 0 18 2 20 6 22 2 30 0 40 4V32C30 28 22 30 20 34 18 30 10 28 0 32Z" fill="#FBE3EE" stroke="#C2276B" stroke-width="3" stroke-linejoin="round"/><path d="M20 6V34" stroke="#C2276B" stroke-width="3"/></g><animateMotion dur="11s" repeatCount="indefinite" rotate="0"><mpath href="#rt"/></animateMotion></g>
+</svg>
+<p style="position:absolute;right:0;bottom:-6px;font-size:22px;color:#8a7f72">Mapa esquemático de la red</p>
+</div>
+<p class="sub r" style="--d:.9;text-align:center">Un libro puede llevarte lejos; ahora también viaja hacia ti.</p>
+</section>
+
+<!-- 3 ANTES / HOY -->
+<section class="slide" id="s-antes" data-steps="1">
+<p class="eyebrow r">El reto</p>
+<h2 class="r" style="--d:.1;margin-top:6px">De la hoja suelta al servicio automático</h2>
+<div class="split">
+<div class="panel a r" style="--d:.3">
+<h3>Antes</h3><p class="sub" style="font-size:30px">Formulario y hoja de cálculo, sin avisos ni seguimiento de fechas.</p>
+<div class="papers"><div class="paper" style="--r:-8deg;left:20px;top:30px"></div><div class="paper" style="--r:6deg;left:170px;top:10px;animation-delay:-1s"></div><div class="paper" style="--r:-3deg;left:320px;top:40px;animation-delay:-2s"></div><span class="q" style="left:110px;top:-30px">?</span><span class="q" style="left:300px;top:-10px;animation-delay:-1.4s">?</span><span class="q" style="left:470px;top:20px;animation-delay:-.7s">?</span></div>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><span class="chip c-w" style="font-size:25px">Revisión manual</span><span class="chip c-w" style="font-size:25px">Sin avisos</span></div>
+</div>
+<div class="panel h" data-step="1">
+<h3 style="color:var(--dgreen)">Hoy</h3><p class="sub" style="font-size:30px;margin-bottom:14px">Un flujo con trazabilidad de principio a fin.</p>
+<div class="flowv"><div class="fn"><i>1</i>La solicitud llega sola</div><div class="fn"><i>2</i>Cada biblioteca decide con un clic</div><div class="fn"><i>3</i>El sistema avisa y recuerda plazos</div><div class="fn"><i>4</i>Todo queda registrado</div></div>
+<span class="chip c-g" style="font-size:25px">Costo adicional: $0</span>
+</div>
+</div>
+</section>
+
+<!-- 4 CAMINO -->
+<section class="slide" id="s-camino" data-steps="7">
+<p class="eyebrow r">Las siete fases</p>
+<h2 class="r" style="--d:.1;margin-top:6px">El camino que recorrió el sistema</h2>
+<div class="camino r" style="--d:.3" id="camino">
+<svg viewBox="0 0 1664 400" width="1664" height="400"><path id="cp" class="cpath" d="M50 270C250 270 250 100 480 100S710 270 940 270 1170 100 1400 100 1560 200 1614 230"/><path id="cp2" class="route2" d="M50 270C250 270 250 100 480 100S710 270 940 270 1170 100 1400 100 1560 200 1614 230"/></svg>
+<div class="tok" id="tok1"><svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="35" fill="#fff" stroke="#C2276B" stroke-width="4"/><path d="M16 26C25 22 33 24 37 28 41 24 49 22 58 26V52C49 48 41 50 37 54 33 50 25 48 16 52Z" fill="#FBE3EE" stroke="#C2276B" stroke-width="3" stroke-linejoin="round"/><path d="M37 28V54" stroke="#C2276B" stroke-width="3"/></svg></div>
+</div>
+<div class="card" id="ccard"></div>
+</section>
+
+<!-- 5 HERRAMIENTAS -->
+<section class="slide" id="s-tools">
+<p class="eyebrow r">Fase 5 · La construcción</p>
+<h2 class="r" style="--d:.1;margin-top:6px">Cinco herramientas, un solo flujo</h2>
+<div class="two">
+<div class="orbit-wrap pop" style="--d:.3">
+<div class="ring-o"></div>
+<div class="center-o"><img src="assets/appsscript.svg" alt="Google Apps Script"></div>
+<div class="orb">
+<div class="it" style="--a:0deg"><div class="cnt"><img src="assets/forms.svg" alt="Formularios"><span>Formularios</span></div></div>
+<div class="it" style="--a:90deg"><div class="cnt"><img src="assets/sheets.svg" alt="Hojas de cálculo"><span>Hojas</span></div></div>
+<div class="it" style="--a:180deg"><div class="cnt"><img src="assets/gmail.svg" alt="Gmail"><span>Gmail</span></div></div>
+<div class="it" style="--a:270deg"><div class="cnt"><img src="assets/calendar.svg" alt="Calendar"><span>Calendar</span></div></div>
+</div>
+</div>
+<div class="rl">
+<div class="r" style="--d:.6"><img src="assets/forms.svg" alt=""><b>Formularios</b>La puerta de entrada</div>
+<div class="r" style="--d:.8"><img src="assets/sheets.svg" alt=""><b>Hojas</b>La base de datos</div>
+<div class="r" style="--d:1"><img src="assets/appsscript.svg" alt=""><b>Apps Script</b>El motor que conecta todo</div>
+<div class="r" style="--d:1.2"><img src="assets/gmail.svg" alt=""><b>Gmail</b>Los avisos automáticos</div>
+<div class="r" style="--d:1.4"><img src="assets/calendar.svg" alt=""><b>Calendar</b>La fecha de devolución</div>
+</div>
+</div>
+</section>
+
+<!-- 6 FORMULARIO -->
+<section class="slide" id="s-form" data-steps="3">
+<p class="eyebrow r">Paso 1</p>
+<h2 class="r" style="--d:.1;margin-top:6px">Todo empieza con un formulario</h2>
+<div class="two" style="gap:70px">
+<div class="browser r" style="--d:.3;width:470px"><div class="tb"><i></i><i></i><i></i><em>Formulario público de REUNIR</em></div><div style="padding:14px;background:#EDE9F8"><img src="assets/captura_formulario_titulo.png" alt="Título del formulario" style="border-radius:10px;margin-bottom:10px"><div class="scan"><img src="assets/captura_formulario_campos.png" alt="Campos del formulario" style="border-radius:10px"></div></div></div>
+<div class="callouts">
+<div class="co" data-step="1"><b>1</b>El usuario diligencia sus datos</div>
+<div class="co g" data-step="2"><b>2</b>Elige de una lista la biblioteca solicitante y la prestamista</div>
+<div class="co" data-step="3"><b>3</b>No escribe correos: el sistema los resuelve solo</div>
+</div>
+</div>
+</section>
+
+<!-- 7 FLUJO -->
+<section class="slide" id="s-flujo" data-steps="6">
+<p class="eyebrow r">Paso 2</p>
+<h2 class="r" style="--d:.1;margin-top:6px">Dos validaciones, un solo recorrido</h2>
+<div class="track r" style="--d:.3" id="track">
+<div class="ftok" id="ftok"><svg viewBox="0 0 74 74" width="70" height="70"><circle cx="37" cy="37" r="35" fill="#fff" stroke="#C2276B" stroke-width="4"/><path d="M16 26C25 22 33 24 37 28 41 24 49 22 58 26V52C49 48 41 50 37 54 33 50 25 48 16 52Z" fill="#FBE3EE" stroke="#C2276B" stroke-width="3" stroke-linejoin="round"/><path d="M37 28V54" stroke="#C2276B" stroke-width="3"/></svg></div>
+</div>
+<div class="card" id="fcard" style="margin-top:60px;min-height:230px"></div>
+</section>
+
+<!-- 8 MOTOR -->
+<section class="slide" id="s-motor" data-steps="3">
+<p class="eyebrow r">Paso 3</p>
+<h2 class="r" style="--d:.1;margin-top:6px">Apps Script: el motor invisible</h2>
+<div class="two" style="gap:60px">
+<div class="browser r" style="--d:.3;width:960px"><div class="tb"><i></i><i></i><i></i><em>Editor de Apps Script · Sistema REUNIR</em></div><img src="assets/captura_appsscript_codigo.png" alt="Código del sistema en Apps Script"></div>
+<div class="callouts">
+<div class="co" data-step="1"><b>⚡</b>Se activa solo al enviar el formulario</div>
+<div class="co g" data-step="2"><b>🔒</b>Bloqueo contra dobles clics y IDs repetidos</div>
+<div class="co" data-step="3"><b>⏰</b>Cada día a las 8:00 a. m. revisa plazos y vencimientos</div>
+</div>
+</div>
+</section>
+
+<!-- 9 HOJA -->
+<section class="slide" id="s-hoja">
+<div style="display:flex;align-items:flex-end;gap:40px">
+<div style="flex:1"><p class="eyebrow r">Paso 4</p><h2 class="r" style="--d:.1;margin-top:6px">La memoria del sistema</h2></div>
+<div class="r" style="--d:.2;display:flex;align-items:baseline;gap:18px"><span class="bignum count" data-to="31">0</span><span class="sub" style="font-size:36px">columnas de trazabilidad</span></div>
+</div>
+<div class="grid31" id="grid31"></div>
+<div class="legend r" style="--d:2.4"><span class="g1">Solicitante</span><span class="g2">Bibliotecas</span><span class="g3">Material</span><span class="g4">Validación de origen</span><span class="g5">Disponibilidad</span><span class="g6">Préstamo</span><span class="g7">Estado · Calendar · Historial</span></div>
+<p class="r" style="--d:2.6;font-size:24px;color:#8a7f72;margin-top:12px">Por privacidad se muestra solo la estructura, no registros reales.</p>
+</section>
+
+<!-- 10 AVISOS -->
+<section class="slide" id="s-avisos">
+<p class="eyebrow r">Paso 5</p>
+<h2 class="r" style="--d:.1;margin-top:6px">El sistema avisa, recuerda y cierra</h2>
+<div class="kpis">
+<div class="kpi r" style="--d:.3"><div class="v"><span class="count" data-to="16">0</span></div><h3>tipos de correo</h3><p>Un mensaje para cada momento del préstamo.</p></div>
+<div class="kpi r" style="--d:.5"><div class="v"><span class="count" data-to="24">0</span><small>h</small></div><h3>para retirar el material</h3><p>Recordatorio a las 24 h; a las 48 h se cierra si no se retira.</p></div>
+<div class="kpi r" style="--d:.7"><div class="v"><span class="count" data-to="3">0</span><small>días</small></div><h3>antes de la devolución</h3><p>Aviso con botón para registrarla con un clic.</p></div>
+</div>
+<div class="who2">
+<span class="pop" style="--d:1.2"><i class="env bounce"></i>Usuario</span><span class="pop" style="--d:1.4"><i class="env bounce"></i>Biblioteca de origen</span><span class="pop" style="--d:1.6"><i class="env bounce"></i>Biblioteca prestamista</span><span class="pop" style="--d:1.8"><i class="env bounce"></i>Administración</span>
+</div>
+</section>
+
+<!-- 11 CIERRE -->
+<section class="slide end" id="s-end">
+<img class="poster" src="assets/afiche_viaje_del_libro.jpg" alt="Afiche del lanzamiento: El viaje del libro">
+<p class="eyebrow r" style="color:#FFE3F0">Feria del Libro de Pereira 2026</p>
+<h1 id="t2" style="max-width:1150px;margin:18px 0 26px" aria-label="Un libro puede llevarte lejos; ahora también viaja hacia ti"></h1>
+<p class="sub r" style="--d:1.9;max-width:1000px">Lanzamiento del Servicio de Préstamo Interbibliotecario para Risaralda y el Eje Cafetero · REUNIR</p>
+<div class="r" style="--d:2.2;display:flex;gap:22px;align-items:center;margin-top:34px;flex-wrap:wrap"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSegyTrCQWxnsDFLEQsBH7kF4qFGe4oPUMX4oHNs71FXe5U8Aw/viewform" target="_blank" rel="noopener">Solicitar un préstamo →</a><span class="chip c-w">9 de noviembre · 3:00 p. m. · Salón Pueblo Rico</span></div>
+<p class="credit r" style="--d:2.5;margin-top:34px">Coordinadora de REUNIR: Nelly Herrera Vargas · Yudy Mayerly · Claudia Trejos · Alejandro Labrada · Mary Soler Vinasco</p>
+</section>
+
+<div class="foot"><img src="assets/logo_reunir_compacto.png" alt="REUNIR"><span>El viaje del libro · Feria del Libro de Pereira 2026</span><div class="grow"></div><div class="dots" id="dots"></div><button class="navb" id="pv" aria-label="Anterior">‹</button><button class="navb" id="nx" aria-label="Siguiente">›</button></div>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="pt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD3E6"/><stop offset="1" stop-color="#E8438A"/></linearGradient>
+<g id="fl"><g id="pe"><path d="M0 0C32 -34 34 -86 0 -112C-34 -86 -32 -34 0 0Z" fill="url(#pt)" stroke="#C2276B" stroke-width="2"/></g>
+<use href="#pe" transform="rotate(60)"/><use href="#pe" transform="rotate(120)"/><use href="#pe" transform="rotate(180)"/><use href="#pe" transform="rotate(240)"/><use href="#pe" transform="rotate(300)"/>
+<g stroke="#6DB33F" stroke-width="4" stroke-linecap="round"><path d="M0 0 18 -50M0 0-18 -50M0 0 0 -58M0 0 36 -34M0 0-36 -34"/></g><g fill="#3F7A1B"><circle cx="18" cy="-50" r="6"/><circle cx="-18" cy="-50" r="6"/><circle cx="0" cy="-58" r="6"/><circle cx="36" cy="-34" r="6"/><circle cx="-36" cy="-34" r="6"/></g></g>
+</defs></svg>
+</div>
+
+<script>
+(function(){
+const stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='translate('+((innerWidth-1920*s)/2)+'px,'+((innerHeight-1080*s)/2)+'px) scale('+s+')';}
+addEventListener('resize',fit);fit();
+function letters(id,text,perWord){const el=document.getElementById(id);let i=0;text.split(' ').forEach((w,k,a)=>{const wd=document.createElement('span');wd.style.cssText='display:inline-block;white-space:nowrap';if(perWord){const s=document.createElement('span');s.textContent=w;s.style.setProperty('--i',k);wd.appendChild(s);}else{[...w].forEach(c=>{const s=document.createElement('span');s.textContent=c;s.style.setProperty('--i',i++);wd.appendChild(s);});}el.appendChild(wd);if(k<a.length-1){el.appendChild(document.createTextNode(' '));i++;}});}
+letters('t1','El viaje del libro',false);letters('t2','Un libro puede llevarte lejos; ahora también viaja hacia ti',true);
+// petals
+const bg=document.getElementById('bg');for(let i=0;i<14;i++){const p=document.createElement('span');p.className='petal';p.style.left=(Math.random()*1900)+'px';p.style.animationDuration=(14+Math.random()*12)+'s';p.style.animationDelay=(-Math.random()*20)+'s';p.style.transform='scale('+(.6+Math.random()*.9)+')';bg.appendChild(p);}
+// nodes map
+const nodes=[[520,400,'Pereira',-70,52],[640,320,'Dosquebradas',30,62],[840,290,'Santa Rosa de Cabal',-90,-36],[1120,215,'Manizales',0,-40]];
+const ng=document.getElementById('nodes');const NS='http://www.w3.org/2000/svg';
+nodes.forEach(n=>{const g=document.createElementNS(NS,'g');g.innerHTML='<circle class="ring" cx="'+n[0]+'" cy="'+n[1]+'" r="18" fill="#E8438A" opacity=".5"/><circle cx="'+n[0]+'" cy="'+n[1]+'" r="18" fill="#C2276B" stroke="#fff" stroke-width="5"/><text x="'+(n[0]+n[3])+'" y="'+(n[1]+(n[4]>0?n[4]:n[4]))+'" text-anchor="middle">'+n[2]+'</text>';ng.appendChild(g);});
+[[300,300],[1380,400],[940,470],[1450,260]].forEach((p,i)=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',p[0]);c.setAttribute('cy',p[1]);c.setAttribute('r',11);c.setAttribute('fill','#6DB33F');c.setAttribute('stroke','#fff');c.setAttribute('stroke-width',4);ng.appendChild(c);});
+// columnas
+const cols=[['Solicitante',1,['ID','Fecha solicitud','Nombre','Correo solicitante','Tipo de usuario','Documento','Programa']],['Bibliotecas',2,['Biblioteca origen','Correo origen','Biblioteca prestamista','Correo prestamista']],['Material',3,['Tipo de material','Título','Autor','Observaciones']],['Estado',7,['Estado']],['Origen',4,['Autorización origen','Vigencia usuario','Funcionario origen','Fecha decisión origen','Motivo rechazo origen']],['Disp',5,['Disponibilidad','Funcionario prestamista','Fecha decisión prestamista','Motivo rechazo prestamista']],['Préstamo',6,['Fecha préstamo','Devolución esperada','Devolución real','Se entregó']],['Fin',7,['ID Calendar','Historial']]];
+const gr=document.getElementById('grid31');let ci=0;cols.forEach(c=>c[2].forEach(t=>{const d=document.createElement('div');d.className='col g'+c[1];d.textContent=t;d.style.setProperty('--i',ci++);gr.appendChild(d);}));
+// camino
+const CP=document.getElementById('cp'),L=CP.getTotalLength();document.getElementById('cp2').style.setProperty('--L',L);
+const cam=document.getElementById('camino'),tok=document.getElementById('tok1');
+const F=[['Idea','Un sistema automatizado, proyectado desde la coordinación anterior: una solución integral para la gestión del préstamo de la Red REUNIR.','Yudy Mayerly y Claudia Trejos'],['Mejoras','La coordinación de REUNIR identifica opciones de mejora en el formato vigente para el préstamo interbibliotecario.','Nelly Herrera Vargas, coordinadora de REUNIR'],['Revisión','Se revisa el sistema actual con un objetivo: identificar sus falencias.','Nelly Herrera Vargas, coordinadora de REUNIR'],['Concepto','Desde la revisión, la coordinación delega el concepto del sistema en el analista de biblioteca.','Nelly Herrera Vargas (coordinadora) y Alejandro Labrada'],['Construcción','Se identifica el flujo y se conecta todo en la consola de Apps Script, con trazabilidad según el trabajo de quien lleva el proceso.','Alejandro Labrada'],['Versión beta','Se socializa con todas las coordinaciones y direcciones de REUNIR y se pactan mejoras dentro del flujo. Se propone una segunda reunión.','Coordinaciones y direcciones de REUNIR'],['Validación','En la segunda reunión se valida con la auxiliar y se fortalece el qué hacer al recibir la solicitud.','Mary Soler Vinasco']];
+const pts=F.map((f,i)=>CP.getPointAtLength(L*i/6));
+const sts=[],lbs=[];
+F.forEach((f,i)=>{const s=document.createElement('div');s.className='st pin';s.style.cssText='left:'+pts[i].x+'px;top:'+pts[i].y+'px;--d:'+(.5+i*.25);s.textContent=i+1;s.onclick=()=>setStep('s-camino',i+1);cam.appendChild(s);sts.push(s);const l=document.createElement('div');l.className='stl';l.style.cssText='left:'+pts[i].x+'px;top:'+(pts[i].y+54)+'px';l.textContent=f[0];cam.appendChild(l);lbs.push(l);});
+const ccard=document.getElementById('ccard');
+function hCamino(s,cur){sts.forEach((e,i)=>{e.classList.toggle('reached',i<cur-1);e.classList.toggle('cur',i===cur-1);lbs[i].classList.toggle('cur',i===cur-1);});const k=Math.max(cur-1,0);tok.style.left=pts[k].x+'px';tok.style.top=pts[k].y+'px';
+ ccard.classList.remove('sw');void ccard.offsetWidth;ccard.classList.add('sw');
+ if(cur===0)ccard.innerHTML='<div class="n">→</div><div><h3>Siete fases, un solo viaje</h3><p>Pulsa → o haz clic en una estación para recorrer el camino.</p></div>';
+ else{const f=F[cur-1];ccard.innerHTML='<div class="n">'+cur+'</div><div><h3>'+f[0]+'</h3><p>'+f[1]+'</p></div><div class="who">'+f[2]+'</div>';}}
+// flujo
+const FL=[['Solicitud','Se registra con un ID y se envía el correo a la biblioteca de origen.','Correo → biblioteca de origen'],['Origen valida','Revisa vigencia, multas y entregas pendientes. Aprueba o rechaza con motivo.','Correo → biblioteca prestamista'],['Prestamista confirma','Verifica que el material esté disponible y aprueba o rechaza con motivo.','Correo → usuario y origen'],['Retiro en 24 h','El usuario tiene 24 h para retirar: recordatorio a las 24 h y cierre a las 48 h si no lo hace.','Recordatorio → usuario'],['Préstamo','Entrega confirmada. La devolución queda en Calendar (15 días por defecto; cada biblioteca define su plazo).','Evento → Calendar'],['Devolución','Aviso 3 días antes. Se registra con un clic y se cierra el proceso.','Aviso → usuario']];
+const tr=document.getElementById('track'),ft=document.getElementById('ftok'),fs=[];
+FL.forEach((f,i)=>{const d=document.createElement('div');d.className='fs pin';d.style.setProperty('--d',.5+i*.2);d.innerHTML='<div class="dot">'+(i+1)+'</div><p>'+f[0]+'</p>';d.onclick=()=>setStep('s-flujo',i+1);tr.appendChild(d);fs.push(d);});
+const fcard=document.getElementById('fcard');
+function hFlujo(s,cur){fs.forEach((e,i)=>{e.classList.toggle('reached',i<cur-1);e.classList.toggle('cur',i===cur-1);});const k=Math.max(cur-1,0);const e=fs[k];ft.style.left=(e.offsetLeft+e.offsetWidth/2)+'px';
+ fcard.classList.remove('sw');void fcard.offsetWidth;fcard.classList.add('sw');
+ if(cur===0)fcard.innerHTML='<div class="n">→</div><div><h3>Sigue el recorrido de una solicitud</h3><p>Pulsa → para avanzar paso a paso o haz clic en una estación.</p></div>';
+ else{const f=FL[cur-1];fcard.innerHTML='<div class="n">'+cur+'</div><div><h3>'+f[0]+'</h3><p>'+f[1]+'</p><span class="mail"><i class="env"></i>'+f[2]+'</span></div>';}}
+// engine
+const hooks={'s-camino':hCamino,'s-flujo':hFlujo};
+const slides=[...document.querySelectorAll('.slide')];let idx=0;const steps={};
+const dots=document.getElementById('dots');slides.forEach(()=>dots.appendChild(document.createElement('i')));
+function maxStep(s){return +(s.dataset.steps||0)}
+function applySteps(s){const cur=steps[s.id]||0;s.querySelectorAll('[data-step]').forEach(e=>e.classList.toggle('on',+e.dataset.step<=cur));if(hooks[s.id])hooks[s.id](s,cur);}
+let raf={};
+function counters(s){s.querySelectorAll('.count').forEach((el,k)=>{const to=+el.dataset.to;cancelAnimationFrame(raf[el.dataset.to+k]);const t0=performance.now()+400;const step=now=>{const p=Math.min(Math.max((now-t0)/1500,0),1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)raf[el.dataset.to+k]=requestAnimationFrame(step);};el.textContent='0';raf[el.dataset.to+k]=requestAnimationFrame(step);});}
+function ui(){document.getElementById('bar').style.width=((idx+1)/slides.length*100)+'%';[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===idx));document.querySelector('.foot').style.opacity=idx===slides.length-1?0:1;}
+function enter(i,end){idx=i;const s=slides[i];steps[s.id]=end?maxStep(s):0;slides.forEach((x,k)=>x.classList.toggle('active',k===i));applySteps(s);counters(s);ui();try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+function setStep(id,n){steps[id]=n;applySteps(document.getElementById(id));}
+function next(){const s=slides[idx];if((steps[s.id]||0)<maxStep(s)){steps[s.id]=(steps[s.id]||0)+1;applySteps(s);}else if(idx<slides.length-1)enter(idx+1,false);}
+function prev(){const s=slides[idx];if((steps[s.id]||0)>0){steps[s.id]--;applySteps(s);}else if(idx>0)enter(idx-1,true);}
+document.getElementById('nx').onclick=next;document.getElementById('pv').onclick=prev;
+addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')enter(0,false);else if(e.key==='End')enter(slides.length-1,false);else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();else document.exitFullscreen();}});
+let tx=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)(d<0?next:prev)();tx=null;});
+const start=parseInt((location.hash||'').slice(1),10);enter(start>=1&&start<=slides.length?start-1:0,false);
+})();
+</script>
+</body>
+</html>
