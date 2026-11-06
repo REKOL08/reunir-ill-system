@@ -11,3 +11,4 @@
 - Presentación "El viaje del libro" para el lanzamiento en la Feria del Libro de Pereira 2026 (9 de noviembre, 3:00 p. m., Salón Pueblo Rico, Expofuturo): guion en `docs/presentacion_feria/GUION.md` y capturas del sistema (formulario y Apps Script) en `docs/presentacion_feria/capturas/`. Las capturas no muestran datos personales.
 
 - Presentación web interactiva `presentacion/index.html` (animaciones, recorrido por las 7 fases, flujo paso a paso). Logo oficial de REUNIR (tomado de reunir.com.co). Se agrega a Nelly Herrera Vargas como coordinadora actual.
+- Presentación: escena de la consola de Apps Script (activadores y ejecuciones) y escena interactiva "Pruébalo" con simulador de solicitud (no envía nada) y QR al formulario público.

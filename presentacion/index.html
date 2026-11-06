@@ -182,6 +182,23 @@ h2{font-size:68px}
 .btn{display:inline-block;font-size:34px;font-weight:700;background:#fff;color:var(--mag);padding:20px 44px;border-radius:999px;text-decoration:none;box-shadow:0 14px 34px rgba(0,0,0,.25);transition:transform .2s}
 .btn:hover{transform:scale(1.06)}
 .credit{font-size:26px;color:#FFE3F0;line-height:1.6}
+
+.sim{display:flex;gap:28px;margin-top:18px;flex:1;align-items:stretch}
+.simc{background:#fff;border-radius:28px;padding:30px 32px;box-shadow:0 16px 40px rgba(0,0,0,.09);display:flex;flex-direction:column;gap:14px}
+.simc:nth-child(1){width:560px}.simc.tl{flex:1}.simc.qr{width:430px;align-items:center;text-align:center}
+.simc h3{font-size:36px}
+.note{font-size:24px;color:#8a7f72}
+.simc label{display:flex;flex-direction:column;gap:6px;font-size:25px;font-weight:700;color:var(--soft)}
+.simc select,.simc input{font:inherit;font-size:26px;font-weight:600;padding:12px 16px;border-radius:14px;border:3px solid #E3D8C8;background:#FFFCF7;color:var(--ink);width:100%}
+.simc select:focus,.simc input:focus{outline:none;border-color:var(--mag)}
+.btn2{font:inherit;font-size:28px;font-weight:700;background:var(--mag);color:#fff;border:none;border-radius:999px;padding:16px 30px;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s;box-shadow:0 10px 24px rgba(194,39,107,.35)}
+.btn2:hover{transform:scale(1.04)}.btn2.alt{background:var(--green);color:#1F2A14;box-shadow:0 10px 24px rgba(109,179,63,.4)}
+.tl ol{list-style:none;display:flex;flex-direction:column;gap:9px}
+.tl li{font-size:24px;line-height:1.25;background:var(--greenl);border-radius:14px;padding:9px 16px;animation:rise .6s both}
+.tl li.hint{background:#F4EFE7;color:#8a7f72}
+.tl li.warn{background:var(--pinkl);color:#7a1245}
+.tl li b{color:var(--dgreen)}
+#qrbox svg{width:260px;height:260px;background:#fff;border-radius:14px}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important}}
 </style>
 </head>
@@ -316,6 +333,22 @@ h2{font-size:68px}
 </div>
 </section>
 
+<!-- CONSOLA -->
+<section class="slide" id="s-consola" data-steps="2">
+<p class="eyebrow r">Paso 3 · Bajo el capó</p>
+<h2 class="r" style="--d:.1;margin-top:6px">La consola confirma que todo corre solo</h2>
+<div class="two" style="gap:40px;align-items:flex-start;margin-top:14px">
+<div style="display:flex;flex-direction:column;gap:22px;width:1180px;flex:none">
+<div class="browser" data-step="1"><div class="tb"><i></i><i></i><i></i><em>Consola de Apps Script · Activadores</em></div><img src="assets/consola_activadores.png" alt="Consola de Apps Script: dos activadores, al enviar el formulario y cada día"></div>
+<div class="browser" data-step="2"><div class="tb"><i></i><i></i><i></i><em>Consola de Apps Script · Ejecuciones de los últimos 7 días</em></div><img src="assets/consola_ejecuciones.png" alt="Consola de Apps Script: siete ejecuciones diarias completadas"></div>
+</div>
+<div class="callouts" style="gap:22px">
+<div class="co" data-step="1" style="font-size:30px"><b>2</b>activadores: al enviar el formulario y cada día</div>
+<div class="co g" data-step="2" style="font-size:30px"><b style="min-width:130px;font-size:46px">7/7</b>ejecuciones diarias completadas</div>
+</div>
+</div>
+</section>
+
 <!-- 9 HOJA -->
 <section class="slide" id="s-hoja">
 <div style="display:flex;align-items:flex-end;gap:40px">
@@ -341,6 +374,24 @@ h2{font-size:68px}
 </div>
 </section>
 
+<!-- PRUEBALO -->
+<section class="slide" id="s-prueba">
+<p class="eyebrow r">Ahora te toca a ti</p>
+<h2 class="r" style="--d:.1;margin-top:6px">Pruébalo: simula y solicita de verdad</h2>
+<div class="sim r" style="--d:.3">
+<div class="simc">
+<h3>1 · Simula una solicitud</h3>
+<p class="note">Es una demostración: no se envía nada.</p>
+<label>Biblioteca de origen<select id="sOri"></select></label>
+<label>Biblioteca prestamista<select id="sPre"></select></label>
+<label>Material que necesitas<input id="sTit" type="text" placeholder="Ej.: Cien años de soledad" maxlength="60"></label>
+<button class="btn2" id="sGo">Enviar solicitud simulada</button>
+</div>
+<div class="simc tl" id="sTl"><h3>2 · Lo que haría el sistema</h3><ol id="sOl"><li class="hint">Completa el formulario y pulsa el botón.</li></ol></div>
+<div class="simc qr"><h3>3 · Solicítalo de verdad</h3><div id="qrbox" aria-label="Código QR del formulario público"></div><p class="note" style="margin-top:12px">Escanea o pulsa. Esta solicitud sí llega a las bibliotecas.</p><a class="btn2 alt" href="https://docs.google.com/forms/d/e/1FAIpQLSegyTrCQWxnsDFLEQsBH7kF4qFGe4oPUMX4oHNs71FXe5U8Aw/viewform" target="_blank" rel="noopener">Abrir el formulario →</a></div>
+</div>
+</section>
+
 <!-- 11 CIERRE -->
 <section class="slide end" id="s-end">
 <img class="poster" src="assets/afiche_viaje_del_libro.jpg" alt="Afiche del lanzamiento: El viaje del libro">
@@ -361,6 +412,7 @@ h2{font-size:68px}
 </defs></svg>
 </div>
 
+<script src="assets/qrcode.min.js"></script>
 <script>
 (function(){
 const stage=document.getElementById('stage');
@@ -399,6 +451,24 @@ function hFlujo(s,cur){fs.forEach((e,i)=>{e.classList.toggle('reached',i<cur-1);
  fcard.classList.remove('sw');void fcard.offsetWidth;fcard.classList.add('sw');
  if(cur===0)fcard.innerHTML='<div class="n">→</div><div><h3>Sigue el recorrido de una solicitud</h3><p>Pulsa → para avanzar paso a paso o haz clic en una estación.</p></div>';
  else{const f=FL[cur-1];fcard.innerHTML='<div class="n">'+cur+'</div><div><h3>'+f[0]+'</h3><p>'+f[1]+'</p><span class="mail"><i class="env"></i>'+f[2]+'</span></div>';}}
+
+// simulador y QR
+(function(){
+const libs=['Universidad Libre Pereira','Universidad Tecnológica de Pereira','Universidad Católica de Pereira','Fundación Universitaria del Área Andina','UNISARC Santa Rosa de Cabal','Universidad Cooperativa de Colombia','Universidad de Caldas','Universidad de Manizales','Universidad Autónoma de Manizales','Centro Cultural Biblioteca Banco de la República','Biblioteca Pública Municipal','SENA Centro de diseño e innovación tecnológica'];
+const o=document.getElementById('sOri'),p=document.getElementById('sPre'),t=document.getElementById('sTit'),ol=document.getElementById('sOl');
+libs.forEach((n,i)=>{o.add(new Option(n,n));p.add(new Option(n,n));});p.selectedIndex=1;
+function fmt(d){return d.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});}
+function add(html,cls,delay){setTimeout(()=>{const li=document.createElement('li');if(cls)li.className=cls;li.innerHTML=html;ol.appendChild(li);},delay);}
+document.getElementById('sGo').onclick=function(){
+ ol.innerHTML='';const a=o.value,b=p.value,tit=(t.value||'Cien años de soledad').trim();
+ if(a===b){const li=document.createElement('li');li.className='warn';li.textContent='Elige dos bibliotecas distintas: el sistema avisa si la solicitante y la prestamista son la misma.';ol.appendChild(li);return;}
+ const d=new Date(),ymd=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0'),dev=new Date(d.getTime()+15*864e5);
+ const esc=x=>x.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const ts=esc(tit),ao=esc(a),bo=esc(b);
+ [['✅ Solicitud registrada con el ID <b>REQ-'+ymd+'-0001</b>.',0],['✉️ Correo a <b>'+ao+'</b>: validar al usuario (vigencia, multas, entregas).',900],['👍 Origen aprueba → correo a <b>'+bo+'</b> para confirmar “'+ts+'”.',1900],['📚 La prestamista confirma la disponibilidad.',2900],['⏰ Aviso al usuario: <b>24 h</b> para retirar el material.',3900],['📅 Devolución en 15 días: <b>'+fmt(dev)+'</b>, guardada en Calendar.',4900]].forEach(x=>add(x[0],'',x[1]));
+};
+try{const q=qrcode(0,'M');q.addData('https://docs.google.com/forms/d/e/1FAIpQLSegyTrCQWxnsDFLEQsBH7kF4qFGe4oPUMX4oHNs71FXe5U8Aw/viewform');q.make();document.getElementById('qrbox').innerHTML=q.createSvgTag({cellSize:8,margin:2,scalable:true});}catch(e){document.getElementById('qrbox').textContent='Usa el botón de abajo.';}
+})();
 // engine
 const hooks={'s-camino':hCamino,'s-flujo':hFlujo};
 const slides=[...document.querySelectorAll('.slide')];let idx=0;const steps={};
@@ -413,7 +483,7 @@ function setStep(id,n){steps[id]=n;applySteps(document.getElementById(id));}
 function next(){const s=slides[idx];if((steps[s.id]||0)<maxStep(s)){steps[s.id]=(steps[s.id]||0)+1;applySteps(s);}else if(idx<slides.length-1)enter(idx+1,false);}
 function prev(){const s=slides[idx];if((steps[s.id]||0)>0){steps[s.id]--;applySteps(s);}else if(idx>0)enter(idx-1,true);}
 document.getElementById('nx').onclick=next;document.getElementById('pv').onclick=prev;
-addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')enter(0,false);else if(e.key==='End')enter(slides.length-1,false);else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();else document.exitFullscreen();}});
+addEventListener('keydown',e=>{if(e.target&&e.target.matches){if(e.target.matches('input,select,textarea'))return;if(e.target.matches('button,a')&&(e.key==='Enter'||e.key===' '))return;}if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')enter(0,false);else if(e.key==='End')enter(slides.length-1,false);else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();else document.exitFullscreen();}});
 let tx=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)(d<0?next:prev)();tx=null;});
 const start=parseInt((location.hash||'').slice(1),10);enter(start>=1&&start<=slides.length?start-1:0,false);
 })();
