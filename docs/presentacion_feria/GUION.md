@@ -8,13 +8,13 @@
 Antes, el préstamo interbibliotecario de REUNIR funcionaba con un formulario y una hoja de cálculo sin automatización: revisión manual, sin avisos ni seguimiento de fechas. El reto era lograr trazabilidad y comunicación entre bibliotecas.
 
 ## Las siete fases (paso a paso)
-1. **Idea.** Desde la coordinación anterior, las compañeras Yudy y Claudia Trejos proyectaron un sistema automatizado para el préstamo interbibliotecario: una solución integral para la gestión del préstamo de la Red REUNIR.
+1. **Idea.** Desde la coordinación anterior, las compañeras Yudy Mayerly y Claudia Trejos proyectaron un sistema automatizado para el préstamo interbibliotecario: una solución integral para la gestión del préstamo de la Red REUNIR.
 2. **Oportunidades de mejora.** Desde la coordinación de REUNIR se identificaron opciones de mejora en el formato vigente.
 3. **Revisión del sistema actual.** Se revisó el sistema para identificar sus falencias.
 4. **Delegación.** Desde la revisión, la coordinación delegó en el analista de biblioteca Alejandro Labrada el concepto del sistema.
 5. **Construcción.** Alejandro identificó el flujo y realizó la conexión dentro de la consola de Apps Script, para tener trazabilidad de acuerdo con el flujo de trabajo de la persona encargada. Herramientas: Gmail, Hojas de cálculo, Calendar, Formularios (y Apps Script como motor); ninguna aplicación adicional.
 6. **Versión beta.** Se revisó lo generado con todas las coordinaciones y direcciones de REUNIR; se socializó, se pactaron mejoras dentro del flujo y se propuso una segunda reunión.
-7. **Validación.** En la segunda reunión se validó con la auxiliar de biblioteca (Soler Vinasco), fortaleciendo el sistema desde el qué hacer al recibir la solicitud.
+7. **Validación.** En la segunda reunión se validó con la auxiliar de biblioteca (Mary Soler Vinasco), fortaleciendo el sistema desde el qué hacer al recibir la solicitud.
 
 ## El sistema, paso a paso
 - **Paso 1 · Formulario:** el usuario diligencia el formulario público; elige de una lista la biblioteca solicitante y la prestamista (sin escribir correos).
