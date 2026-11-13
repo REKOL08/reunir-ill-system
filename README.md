@@ -79,7 +79,7 @@ Correos/día: 100 (cuenta personal) · 1.500 (Workspace). Ejecución: 6 min por 
 
 ### Presentación web interactiva
 
-Versión animada para proyectar (flechas del teclado o botones; tecla F = pantalla completa): [`presentacion/`](presentacion/index.html). Con GitHub Pages: https://rekol08.github.io/reunir-ill-system/presentacion/
+Versión animada para proyectar (flechas del teclado o botones; tecla F = pantalla completa): [`presentacion/`](presentacion/index.html). Con GitHub Pages: https://bibliotecas-areandina.github.io/reunir-ill-system/presentacion/
 
 ## 🔐 Notas de seguridad
 
@@ -88,3 +88,14 @@ El repositorio es público: **no subas** el ID del Sheet, la URL del Web App ni 
 ## 👤 Desarrollado por
 
 **REKOL08** — AI Developer & Library Tech Specialist · Areandina — BIDIG · [github.com/REKOL08](https://github.com/REKOL08)
+
+
+## Centralización institucional — 13 de noviembre de 2026
+
+Repositorio transferido a [BIBLIOTECAS-AREANDINA](https://github.com/BIBLIOTECAS-AREANDINA), conservando su nombre y visibilidad pública. Las referencias Git anteriores se verificaron antes de actualizar esta documentación.
+
+Apps Script para préstamo interbibliotecario y presentación web; producción declarada en README, no probada aquí.
+
+Dirección institucional de Pages: https://bibliotecas-areandina.github.io/reunir-ill-system/ . La disponibilidad HTTP se registra en la bitácora de centralización; no equivale a una prueba funcional completa. Los enlaces antiguos de Pages y QR impresos requieren actualización.
+
+[Inventario y pendientes](https://github.com/BIBLIOTECAS-AREANDINA/BIBLIONOVA/blob/main/docs/CENTRALIZACION_2026-11-13.md). No se modificaron despliegues de Apps Script, n8n ni Koha de producción.
